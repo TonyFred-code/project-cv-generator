@@ -1,0 +1,12 @@
+.profiles-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+}
+
+.profile-card {
+  box-shadow: 1px 1px 2px 0px;
+}
+
+.last-edited {
+  font-size: 1rem;
+}
