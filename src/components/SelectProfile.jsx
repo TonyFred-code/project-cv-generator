@@ -22,6 +22,12 @@ const defaultProfile = [
       section_name: 'personal_details',
     },
 
+    work_experience: {
+      title: 'Work Experience',
+      section_name: 'work_experience',
+      work_experiences: [{}, {}],
+    },
+
     educational_experience: {
       title: 'Educational Experience',
       section_name: 'educational_experience',
@@ -67,9 +73,43 @@ const defaultProfile = [
       section_name: 'personal_details',
     },
 
+    work_experience: {
+      title: 'Work Experience',
+      section_name: 'work_experience',
+      work_experiences: [{}, {}],
+    },
+
+    educational_experience: {
+      title: 'Educational Experience',
+      section_name: 'educational_experience',
+      educations_experiences: [
+        {
+          course: 'Computer Science',
+          degree: 'B.Tech',
+          yearStarted: 'some date',
+          stillActive: true,
+          school: 'Federal University of Technology, Akure',
+          experience_id: 1,
+          yearEnded: 'some date',
+        },
+
+        {
+          course: 'Computer Science',
+          degree: 'B.Tech',
+          yearStarted: 'some date',
+          yearEnded: 'some date',
+          stillActive: true,
+          school: 'Federal University of Technology, Akure',
+          experience_id: 2,
+        },
+      ],
+    },
+
     id: 2,
   },
 ];
+
+let nextId = 3;
 
 function SelectProfile({ onClose }) {
   const [underDevModalOpen, setUnderDevModalOpen] = useState(false);
@@ -97,6 +137,24 @@ function SelectProfile({ onClose }) {
     setProfiles([...profiles, profile]);
   }
 
+  function handlePersonalDetailsEdit(profile, updatedPersonalDetails) {
+    const updatedProfile = {
+      ...profile,
+      personal_details: { ...updatedPersonalDetails },
+    };
+
+    const updatedProfiles = profiles.map((p) => {
+      if (p.id === updatedProfile.id) {
+        return updatedProfile;
+      } else {
+        return p;
+      }
+    });
+
+    setProfiles(updatedProfiles);
+    console.log(updatedProfiles);
+  }
+
   function handleOpenProfileDetails(profile) {
     return (
       <>
@@ -107,6 +165,7 @@ function SelectProfile({ onClose }) {
             setOpenCreateProfile(false);
           }}
           onProfileCreate={handleProfileCreate}
+          onUpdatePersonalDetails={handlePersonalDetailsEdit}
         />
       </>
     );
@@ -116,16 +175,42 @@ function SelectProfile({ onClose }) {
     const profile = {
       profile_description: {
         fullName: '',
-        lastEdited: null,
+        lastEdited: Date.now(),
         emailAddress: '',
       },
+
       personal_details: {
         title: 'Personal Details',
         fullName: '',
         emailAddress: '',
         homeAddress: '',
         phoneNumber: '',
+        section_name: 'personal_details',
       },
+
+      work_experience: {
+        title: 'Work Experience',
+        section_name: 'work_experience',
+        work_experiences: [{}, {}],
+      },
+
+      educational_experience: {
+        title: 'Educational Experience',
+        section_name: 'educational_experience',
+        educations_experiences: [
+          {
+            course: '',
+            degree: '',
+            yearStarted: '',
+            stillActive: false,
+            school: '',
+            experience_id: 1,
+            yearEnded: '',
+          },
+        ],
+      },
+
+      id: nextId++,
     };
 
     return handleOpenProfileDetails(profile);
@@ -144,7 +229,7 @@ function SelectProfile({ onClose }) {
       <header className='d-flex__row justify-content__space-around align-items__center'>
         <button
           type='button'
-          className='btn btn-icon'
+          className='btn d-flex__row align-items__center gap_1r btn-icon'
           onClick={() => {
             onClose();
           }}
@@ -157,7 +242,7 @@ function SelectProfile({ onClose }) {
         <h1 className='text-transform__capitalize'>select profile</h1>
         <button
           type='button'
-          className='btn btn-icon'
+          className='btn d-flex__row align-items__center gap_1r btn-icon'
           onClick={() => {
             handleCreateProfile();
           }}
