@@ -6,6 +6,10 @@
   box-sizing: border-box;
 }
 
+#root > * {
+  min-height: 100vh;
+}
+
 html {
   font-size: 10px;
   box-sizing: inherit;
@@ -15,13 +19,17 @@ body {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
-  font-size: 1.8rem;
+  font-size: 1.6rem;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 
   min-height: 100vh;
+}
+
+header {
+  margin-bottom: 1.5rem;
 }
 
 h1 {
@@ -36,6 +44,14 @@ ul {
 dialog {
   margin: auto;
   border: 2px inset;
+}
+
+input,
+textarea {
+  padding: 0.5rem 1rem;
+  margin-left: 1rem;
+  border: 1px solid blue;
+  line-height: 2;
 }
 
 img {
@@ -63,6 +79,11 @@ button:hover {
 button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
+}
+
+.container {
+  margin: 0 auto;
+  max-width: 1128px;
 }
 
 .d-flex__col {
@@ -95,8 +116,16 @@ button:focus-visible {
   gap: 2rem;
 }
 
+.padding_1r {
+  padding: 1rem;
+}
+
 .padding_2r {
   padding: 2rem;
+}
+
+.margin_lr_centering {
+  margin: 0 auto;
 }
 
 .text-align__center {
@@ -117,6 +146,10 @@ button:focus-visible {
 
 .text-transform__uppercase {
   text-transform: uppercase;
+}
+
+.cursor__pointer {
+  cursor: pointer;
 }
 
 @media (min-width: 900px) {
@@ -143,13 +176,25 @@ button:focus-visible {
   padding: 1rem 1.2rem;
 }
 
-.btn .icon-text {
+.btn-icon .icon-text {
   display: none;
 }
 
 @media (min-width: 768px) {
+  html {
+    font-size: 11px;
+  }
+
   h1 {
     font-size: 2.5rem;
+  }
+
+  .container {
+    width: 70%;
+  }
+
+  button {
+    padding: 1rem 1.2rem;
   }
 
   .btn-icon .icon-container {
