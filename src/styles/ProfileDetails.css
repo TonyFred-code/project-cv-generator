@@ -10,6 +10,7 @@
 .section-tab {
   background-color: #fff;
   border-radius: 0 10px 10px 0;
+  box-shadow: 2px 2px 5px 0px rgb(172, 143, 143);
   transition: all 100ms cubic-bezier(0.4, 0, 1, 1);
 }
 
