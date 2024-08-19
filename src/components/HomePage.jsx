@@ -2,8 +2,8 @@ import { useState } from 'react';
 
 import Modal from './UnderDevelopment';
 import SelectProfile from './SelectProfile';
-import CreateIconSrc from '../../public/close.svg';
-import DownloadsIconSrc from '../../public/square-edit-outline.svg';
+import CreateIconSrc from '/close.svg';
+import DownloadsIconSrc from '/square-edit-outline.svg';
 import '../styles/HomePage.css';
 
 function HomePage() {
