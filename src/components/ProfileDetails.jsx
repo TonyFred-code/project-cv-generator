@@ -1,19 +1,19 @@
-import BackIconSrc from '/close.svg';
 import '../styles/ProfileDetails.css';
 import { useState } from 'react';
 import PersonalDetails from './PersonalDetails';
+import ExperienceDetails from './ExperienceDetails';
+import Icon from '@mdi/react';
+import { mdiArrowLeftThin, mdiEye } from '@mdi/js';
 
 function ProfileDetails({
   profileDetails,
   onUpdatePersonalDetails,
   handlePageClose,
-  onProfileCreate,
 }) {
   const [personalDetailsOpen, setPersonalDetailsOpen] = useState(false);
   const [experienceDetailsOpen, setExperienceDetailsOpen] = useState(false);
   const [educationDetailsOpen, setEducationDetailsOpen] = useState(false);
 
-  // console.log(JSON.stringify(profileDetails));
   const { personal_details, work_experience, educational_experience } =
     profileDetails;
 
@@ -33,9 +33,16 @@ function ProfileDetails({
     );
   }
 
-  // if (experienceDetailsOpen) {
-  //   return null;
-  // }
+  if (experienceDetailsOpen) {
+    return (
+      <ExperienceDetails
+        experience_details={work_experience}
+        onClose={() => {
+          setExperienceDetailsOpen(false);
+        }}
+      />
+    );
+  }
 
   // if ()
 
@@ -50,12 +57,15 @@ function ProfileDetails({
           }}
         >
           <span className='icon-container'>
-            <img src={BackIconSrc} alt='' />
+            <Icon path={mdiArrowLeftThin} size={3} />
           </span>
           <span className='icon-text'>Back</span>
         </button>
         <h1 className='profile-page-title'>Profile</h1>
-        <button className='btn'>
+        <button className='btn d-flex__row align-items__center gap_1r'>
+          <span className='icon-container'>
+            <Icon path={mdiEye} size={2} />
+          </span>
           <span>View CV</span>
         </button>
       </header>
