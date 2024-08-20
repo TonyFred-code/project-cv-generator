@@ -131,7 +131,27 @@ function PersonalDetails({
               </div>
             </form>
           ) : (
-            <div> Personal Details Help</div>
+            <div className='container'>
+              <ul className='d-flex__col gap_2r padding_2r align-items__center'>
+                <li>
+                  <p>
+                    Personal Details include your contact information and other
+                    personal information
+                  </p>
+                </li>
+                <li>
+                  <p>
+                    Ensure to save any changes made to avoid changes being lost
+                  </p>
+                </li>
+                <li>
+                  <p>
+                    Every field on the form is required for the profile to be
+                    updated
+                  </p>
+                </li>
+              </ul>
+            </div>
           )}
         </div>
       </div>
