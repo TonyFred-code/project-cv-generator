@@ -4,14 +4,10 @@ import Modal from './UnderDevelopment';
 import ProfileDetails from './ProfileDetails';
 import Icon from '@mdi/react';
 import { mdiArrowLeftThin, mdiPlus } from '@mdi/js';
+import dateFormat from 'dateformat';
+
 const defaultProfile = [
   {
-    profile_description: {
-      fullName: 'John Doe',
-      lastEdited: Date.now(),
-      emailAddress: 'johndoe@gmail.com',
-    },
-
     personal_details: {
       title: 'Personal Details',
       fullName: 'John Doe',
@@ -54,16 +50,10 @@ const defaultProfile = [
     },
 
     id: 1,
-    last_edited: Date.now(),
+    last_edited: dateFormat(),
   },
 
   {
-    profile_description: {
-      fullName: 'John Doe',
-      lastEdited: Date.now(),
-      emailAddress: 'johndoe@gmail.com',
-    },
-
     personal_details: {
       title: 'Personal Details',
       fullName: 'John Doe',
@@ -106,7 +96,7 @@ const defaultProfile = [
     },
 
     id: 2,
-    last_edited: Date.now(),
+    last_edited: dateFormat(),
   },
 ];
 
@@ -129,12 +119,6 @@ function SelectProfile({ onClose }) {
 
   function handleCreateProfile() {
     const profile = {
-      profile_description: {
-        fullName: '',
-        lastEdited: Date.now(),
-        emailAddress: '',
-      },
-
       personal_details: {
         title: 'Personal Details',
         fullName: '',
@@ -167,7 +151,7 @@ function SelectProfile({ onClose }) {
       },
 
       id: nextId++,
-      last_edited: Date.now(),
+      last_edited: dateFormat(),
     };
 
     setActiveProfileId(profile.id);
@@ -179,7 +163,7 @@ function SelectProfile({ onClose }) {
     const updatedProfile = {
       ...profile,
       personal_details: { ...updatedPersonalDetails },
-      last_edited: new Date().getDate(),
+      last_edited: dateFormat(),
     };
 
     const updatedProfiles = profiles.map((p) => {
