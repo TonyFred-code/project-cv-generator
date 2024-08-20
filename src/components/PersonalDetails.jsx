@@ -156,11 +156,13 @@ function PersonalDetails({
         </div>
       </div>
 
-      <footer className='d-flex__col'>
-        <button type='submit' form='personal_details_form' className='btn'>
-          Save Changes
-        </button>
-      </footer>
+      {activeTabId === 1 && (
+        <footer className='d-flex__col'>
+          <button type='submit' form='personal_details_form' className='btn'>
+            Save Changes
+          </button>
+        </footer>
+      )}
     </div>
   );
 }
