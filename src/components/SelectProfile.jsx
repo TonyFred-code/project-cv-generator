@@ -1,10 +1,9 @@
 import { useState } from 'react';
-import BackIconSrc from '/close.svg';
-import EditIconSrc from '/square-edit-outline.svg';
 import '../styles/SelectProfile.css';
-
 import Modal from './UnderDevelopment';
 import ProfileDetails from './ProfileDetails';
+import Icon from '@mdi/react';
+import { mdiArrowLeftThin, mdiPlus } from '@mdi/js';
 const defaultProfile = [
   {
     profile_description: {
@@ -55,6 +54,7 @@ const defaultProfile = [
     },
 
     id: 1,
+    last_edited: Date.now(),
   },
 
   {
@@ -106,6 +106,7 @@ const defaultProfile = [
     },
 
     id: 2,
+    last_edited: Date.now(),
   },
 ];
 
@@ -116,7 +117,6 @@ function SelectProfile({ onClose }) {
   const [profiles, setProfiles] = useState(defaultProfile);
   const [openProfileDetails, setOpenProfileDetails] = useState(false);
   const [activeProfileId, setActiveProfileId] = useState(1);
-  const [openCreateProfile, setOpenCreateProfile] = useState(false);
 
   function toggleDialog() {
     setUnderDevModalOpen(!underDevModalOpen);
@@ -125,53 +125,9 @@ function SelectProfile({ onClose }) {
   function handleEditProfile(id) {
     setActiveProfileId(id);
     setOpenProfileDetails(true);
-    setOpenCreateProfile(false);
   }
 
   function handleCreateProfile() {
-    setOpenCreateProfile(true);
-    setOpenProfileDetails(false);
-  }
-
-  function handleProfileCreate(profile) {
-    setProfiles([...profiles, profile]);
-  }
-
-  function handlePersonalDetailsEdit(profile, updatedPersonalDetails) {
-    const updatedProfile = {
-      ...profile,
-      personal_details: { ...updatedPersonalDetails },
-    };
-
-    const updatedProfiles = profiles.map((p) => {
-      if (p.id === updatedProfile.id) {
-        return updatedProfile;
-      } else {
-        return p;
-      }
-    });
-
-    setProfiles(updatedProfiles);
-    console.log(updatedProfiles);
-  }
-
-  function handleOpenProfileDetails(profile) {
-    return (
-      <>
-        <ProfileDetails
-          profileDetails={profile}
-          handlePageClose={() => {
-            setOpenProfileDetails(false);
-            setOpenCreateProfile(false);
-          }}
-          onProfileCreate={handleProfileCreate}
-          onUpdatePersonalDetails={handlePersonalDetailsEdit}
-        />
-      </>
-    );
-  }
-
-  if (openCreateProfile) {
     const profile = {
       profile_description: {
         fullName: '',
@@ -211,9 +167,45 @@ function SelectProfile({ onClose }) {
       },
 
       id: nextId++,
+      last_edited: Date.now(),
     };
 
-    return handleOpenProfileDetails(profile);
+    setActiveProfileId(profile.id);
+    setOpenProfileDetails(true);
+    setProfiles([...profiles, profile]);
+  }
+
+  function handlePersonalDetailsEdit(profile, updatedPersonalDetails) {
+    const updatedProfile = {
+      ...profile,
+      personal_details: { ...updatedPersonalDetails },
+      last_edited: new Date().getDate(),
+    };
+
+    const updatedProfiles = profiles.map((p) => {
+      if (p.id === updatedProfile.id) {
+        return updatedProfile;
+      } else {
+        return p;
+      }
+    });
+
+    setProfiles(updatedProfiles);
+    console.log(updatedProfiles);
+  }
+
+  function handleOpenProfileDetails(profile) {
+    return (
+      <>
+        <ProfileDetails
+          profileDetails={profile}
+          handlePageClose={() => {
+            setOpenProfileDetails(false);
+          }}
+          onUpdatePersonalDetails={handlePersonalDetailsEdit}
+        />
+      </>
+    );
   }
 
   if (openProfileDetails) {
@@ -235,7 +227,7 @@ function SelectProfile({ onClose }) {
           }}
         >
           <span className='icon-container'>
-            <img src={BackIconSrc} alt='' />
+            <Icon path={mdiArrowLeftThin} size={3} />
           </span>
           <span className='icon-text'>Back</span>
         </button>
@@ -243,12 +235,10 @@ function SelectProfile({ onClose }) {
         <button
           type='button'
           className='btn d-flex__row align-items__center gap_1r btn-icon'
-          onClick={() => {
-            handleCreateProfile();
-          }}
+          onClick={handleCreateProfile}
         >
           <span className='icon-container'>
-            <img src={EditIconSrc} alt='' />
+            <Icon path={mdiPlus} size={2} />
           </span>
           <span className='icon-text'>Create Profile</span>
         </button>
@@ -256,15 +246,15 @@ function SelectProfile({ onClose }) {
       <div>
         <ul className='gap_2r profiles-container'>
           {profiles.map((profile) => {
-            const { profile_description } = profile;
+            const { personal_details } = profile;
             return (
               <li key={profile.id}>
                 <div className='profile-card d-flex__col gap_2r padding_2r'>
                   <div className='profile-details d-flex__col gap_1r'>
-                    <p>{profile_description.fullName}</p>
-                    <p>{profile_description.emailAddress}</p>
+                    <p>{personal_details.fullName}</p>
+                    <p>{personal_details.emailAddress}</p>
                     <p className='last-edited text-align__right'>
-                      <span>{profile_description.lastEdited}</span>
+                      <span>{profile.last_edited}</span>
                     </p>
                   </div>
                   <div className='btn-group d-flex__row gap_2r justify-content__space-around'>
