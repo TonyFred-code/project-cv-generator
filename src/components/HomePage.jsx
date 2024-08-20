@@ -2,8 +2,8 @@ import { useState } from 'react';
 
 import Modal from './UnderDevelopment';
 import SelectProfile from './SelectProfile';
-import CreateIconSrc from '/close.svg';
-import DownloadsIconSrc from '/square-edit-outline.svg';
+import Icon from '@mdi/react';
+import { mdiDownloadBox, mdiSquareEditOutline } from '@mdi/js';
 import '../styles/HomePage.css';
 
 function HomePage() {
@@ -34,25 +34,27 @@ function HomePage() {
       <div className='btn-group d-flex__row gap_2r justify-content__center align-items__center'>
         <button
           type='button'
-          className='btn d-flex__row gap_1r'
+          className='btn d-flex__row gap_1r d-flex__row align-items__center'
           onClick={() => {
             setSelectProfileOpen(true);
           }}
         >
           <span className='icon-container'>
-            <img src={CreateIconSrc} alt='' />
+            {/* <img src={CreateIconSrc} alt='' /> */}
+            <Icon path={mdiSquareEditOutline} size={2} />
           </span>
           <span className='icon-text'>Create</span>
         </button>
         <button
           type='button'
-          className='btn d-flex__row gap_1r'
+          className='btn d-flex__row gap_1r align-items__center'
           onClick={() => {
             toggleDialog();
           }}
         >
           <span className='icon-container'>
-            <img src={DownloadsIconSrc} alt='' />
+            {/* <img src={DownloadsIconSrc} alt='' /> */}
+            <Icon path={mdiDownloadBox} size={2} />
           </span>
           <span className='icon-text'>Downloads</span>
         </button>
