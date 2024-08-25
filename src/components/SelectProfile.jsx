@@ -3,7 +3,13 @@ import '../styles/SelectProfile.css';
 import Modal from './UnderDevelopment';
 import ProfileDetails from './ProfileDetails';
 import Icon from '@mdi/react';
-import { mdiArrowLeftThin, mdiPlus } from '@mdi/js';
+import {
+  mdiArrowLeftThin,
+  mdiClockOutline,
+  mdiEye,
+  mdiPlus,
+  mdiTrashCan,
+} from '@mdi/js';
 import dateFormat from 'dateformat';
 
 const defaultProfile = [
@@ -20,7 +26,15 @@ const defaultProfile = [
     work_experience: {
       title: 'Work Experience',
       section_name: 'work_experience',
-      work_experiences: [{}, {}],
+      work_experiences: [
+        {
+          job_title: 'Software Engineer',
+          job_description:
+            'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatibus assumenda explicabo aut, consectetur ullam est quod labore soluta excepturi, totam dignissimos voluptates odio cumque deleniti debitis consequuntur suscipit veritatis maiores!',
+          company_name: 'Some company',
+          id: 1,
+        },
+      ],
     },
 
     educational_experience: {
@@ -33,7 +47,7 @@ const defaultProfile = [
           yearStarted: 'some date',
           stillActive: true,
           school: 'Federal University of Technology, Akure',
-          experience_id: 1,
+          id: 1,
           yearEnded: 'some date',
         },
 
@@ -44,7 +58,7 @@ const defaultProfile = [
           yearEnded: 'some date',
           stillActive: true,
           school: 'Federal University of Technology, Akure',
-          experience_id: 2,
+          id: 2,
         },
       ],
     },
@@ -66,7 +80,15 @@ const defaultProfile = [
     work_experience: {
       title: 'Work Experience',
       section_name: 'work_experience',
-      work_experiences: [{}, {}],
+      work_experiences: [
+        {
+          id: 1,
+          job_title: 'Software Engineer',
+          job_description:
+            'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatibus assumenda explicabo aut, consectetur ullam est quod labore soluta excepturi, totam dignissimos voluptates odio cumque deleniti debitis consequuntur suscipit veritatis maiores!',
+          company_name: 'Some company',
+        },
+      ],
     },
 
     educational_experience: {
@@ -79,7 +101,7 @@ const defaultProfile = [
           yearStarted: 'some date',
           stillActive: true,
           school: 'Federal University of Technology, Akure',
-          experience_id: 1,
+          id: 1,
           yearEnded: 'some date',
         },
 
@@ -90,7 +112,7 @@ const defaultProfile = [
           yearEnded: 'some date',
           stillActive: true,
           school: 'Federal University of Technology, Akure',
-          experience_id: 2,
+          id: 2,
         },
       ],
     },
@@ -131,23 +153,13 @@ function SelectProfile({ onClose }) {
       work_experience: {
         title: 'Work Experience',
         section_name: 'work_experience',
-        work_experiences: [{}, {}],
+        work_experiences: [],
       },
 
       educational_experience: {
         title: 'Educational Experience',
         section_name: 'educational_experience',
-        educations_experiences: [
-          {
-            course: '',
-            degree: '',
-            yearStarted: '',
-            stillActive: false,
-            school: '',
-            experience_id: 1,
-            yearEnded: '',
-          },
-        ],
+        educations_experiences: [],
       },
 
       id: nextId++,
@@ -178,6 +190,100 @@ function SelectProfile({ onClose }) {
     console.log(updatedProfiles);
   }
 
+  function handleExperienceCreate(profile, experienceDetails) {
+    // const {company_name, job_title, start_date, end_date, still_on_job, job_details } = experienceDetails;
+
+    // const [profile] = profiles.filter((p) => p.id === profileId);
+    const experienceIds = profile.work_experience.work_experiences.map(
+      (experience) => {
+        return experience.id;
+      },
+    );
+
+    const maxId = Math.max(...experienceIds);
+
+    const newExperience = {
+      company_name: '',
+      job_title: '',
+      job_description: '',
+      id: maxId + 1,
+    };
+
+    const updatedProfile = {
+      ...profile,
+      work_experience: {
+        ...profile.work_experience,
+        work_experiences: [
+          ...profile.work_experience.work_experiences,
+          newExperience,
+        ],
+      },
+      last_edited: dateFormat(),
+    };
+
+    const updatedProfiles = profiles.map((p) => {
+      if (p.id === updatedProfile.id) {
+        return updatedProfile;
+      } else {
+        return p;
+      }
+    });
+
+    setProfiles(updatedProfiles);
+    // console.log(profileId, experienceDetails);
+    return maxId + 1;
+  }
+
+  function handleExperienceDetailsUpdate(profile, updatedExperienceDetails) {
+    // const experienceIds = profile.work_experience.work_experiences.map((experience) => {
+    //   return experience.id;
+    // });
+
+    // const maxId = Math.max(...experienceIds);
+
+    // const newExperience = {
+    //   ...experienceDetails,
+    //   id: maxId + 1,
+    // }
+
+    const updatedProfile = {
+      ...profile,
+      work_experience: {
+        ...profile.work_experience,
+        work_experiences: profile.work_experience.work_experiences.map(
+          (exp) => {
+            if (exp.id === updatedExperienceDetails.id) {
+              return {
+                ...exp,
+                ...updatedExperienceDetails,
+              };
+            } else {
+              return exp;
+            }
+          },
+        ),
+      },
+      last_edited: dateFormat(),
+    };
+
+    const updatedProfiles = profiles.map((p) => {
+      if (p.id === updatedProfile.id) {
+        return updatedProfile;
+      } else {
+        return p;
+      }
+    });
+
+    setProfiles(updatedProfiles);
+    console.log(profile, updatedExperienceDetails);
+  }
+
+  function handleProfileDelete(profileId) {
+    const newProfiles = profiles.filter((p) => p.id !== profileId);
+
+    setProfiles(newProfiles);
+  }
+
   function handleOpenProfileDetails(profile) {
     return (
       <>
@@ -187,6 +293,8 @@ function SelectProfile({ onClose }) {
             setOpenProfileDetails(false);
           }}
           onUpdatePersonalDetails={handlePersonalDetailsEdit}
+          onUpdateExperienceDetails={handleExperienceDetailsUpdate}
+          onCreateExperience={handleExperienceCreate}
         />
       </>
     );
@@ -229,15 +337,33 @@ function SelectProfile({ onClose }) {
       </header>
       <div>
         <ul className='gap_2r profiles-container'>
-          {profiles.map((profile) => {
+          {profiles.map((profile, index) => {
             const { personal_details } = profile;
             return (
               <li key={profile.id}>
                 <div className='profile-card d-flex__col gap_2r padding_2r'>
-                  <div className='profile-details d-flex__col gap_1r'>
+                  <header className='d-flex__row gap_1r align-items__center padding_1r justify-content__space-between'>
+                    <h1>Profile {index + 1}</h1>
+
+                    <button
+                      type='button'
+                      className='btn d-flex__row align-items__center gap_1r'
+                      onClick={() => {
+                        handleProfileDelete(profile.id);
+                      }}
+                      title='Delete Profile'
+                    >
+                      <span className='icon-container'>
+                        <Icon path={mdiTrashCan} size={2} />
+                      </span>
+                    </button>
+                  </header>
+
+                  <div className='profile-details d-flex__col  gap_1r'>
                     <p>{personal_details.fullName}</p>
                     <p>{personal_details.emailAddress}</p>
-                    <p className='last-edited text-align__right'>
+                    <p className='last-edited justify-content__flex-end d-flex__row gap_1r align-items__center'>
+                      <Icon path={mdiClockOutline} size={1} />
                       <span>{profile.last_edited}</span>
                     </p>
                   </div>
@@ -252,8 +378,14 @@ function SelectProfile({ onClose }) {
                       <span>Edit</span>
                     </button>
 
-                    <button type='button' className='btn'>
-                      <span>View CV</span>
+                    <button
+                      type='button'
+                      className='btn d-flex__row align-items__center gap_1r btn-icon'
+                    >
+                      <span className='icon-container'>
+                        <Icon path={mdiEye} size={2} />
+                      </span>
+                      <span className='icon-text'>View CV</span>
                     </button>
                   </div>
                 </div>
