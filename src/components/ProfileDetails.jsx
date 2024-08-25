@@ -9,6 +9,7 @@ function ProfileDetails({
   profileDetails,
   onUpdatePersonalDetails,
   onUpdateExperienceDetails,
+  onDeleteExperience,
   onCreateExperience,
   handlePageClose,
 }) {
@@ -25,6 +26,10 @@ function ProfileDetails({
 
   function handleExperienceCreate() {
     return onCreateExperience(profileDetails);
+  }
+
+  function handleExperienceDelete(experienceId) {
+    onDeleteExperience(profileDetails, experienceId);
   }
 
   function handleExperienceDetailsUpdate(updatedExperienceDetails) {
@@ -54,6 +59,7 @@ function ProfileDetails({
         }}
         onUpdateExperienceDetails={handleExperienceDetailsUpdate}
         onExperienceCreate={handleExperienceCreate}
+        onExperienceDelete={handleExperienceDelete}
       />
     );
   }

@@ -1,16 +1,20 @@
 import { useState } from 'react';
-import BackIconSrc from '/close.svg';
-import AddIconSrc from '/plus.svg';
-
 import '../styles/ExperienceDetails.css';
 import Icon from '@mdi/react';
-import { mdiCheckBold, mdiPen } from '@mdi/js';
+import {
+  mdiArrowLeftThin,
+  mdiCheckBold,
+  mdiPen,
+  mdiPlus,
+  mdiTrashCan,
+} from '@mdi/js';
 
 function ExperienceDetails({
   experience_details,
   onClose,
   onUpdateExperienceDetails,
   onExperienceCreate,
+  onExperienceDelete,
 }) {
   const [activeTabId, setActiveTabId] = useState(1);
   const [activeExperienceId, setActiveExperienceId] = useState(null);
@@ -34,6 +38,10 @@ function ExperienceDetails({
     onUpdateExperienceDetails(newExperienceDetail);
   }
 
+  function handleDeleteExperience(experienceId) {
+    onExperienceDelete(experienceId);
+  }
+
   console.log(experience_details);
 
   return (
@@ -47,7 +55,7 @@ function ExperienceDetails({
           }}
         >
           <span className='icon-container'>
-            <img src={BackIconSrc} alt='' />
+            <Icon path={mdiArrowLeftThin} size={3} />
           </span>
           <span className='icon-text'>Back</span>
         </button>
@@ -61,14 +69,14 @@ function ExperienceDetails({
             }}
           >
             <span className='icon-container'>
-              <img src={AddIconSrc} alt='' />
+              <Icon path={mdiPlus} size={3} />
             </span>
             <span className='icon-text'>Add</span>
           </button>
         )}
       </header>
 
-      <div>
+      <div className='d-flex__col gap_1r'>
         <div className='tab-area d-flex__row align-items__center justify-content__space-around padding_1r'>
           <button
             className={`personal_details_view_tab tab-btn btn ${
@@ -96,7 +104,7 @@ function ExperienceDetails({
           {activeTabId === 1 ? (
             <>
               <header>
-                <h1>Work Experiences</h1>
+                <h1 className='text-align__center'>Work Experiences</h1>
               </header>
               <div className='d-flex__col gap_2r padding_1r'>
                 {experience_details.map((experience_detail, index) => {
@@ -128,20 +136,34 @@ function ExperienceDetails({
                         <h2 className='text-transform__capitalize margin_lr_centering'>
                           Work Experience {index + 1}
                         </h2>
-                        {activeExperienceId === null && (
+                        <div className='d-flex__row align-items_center gap_1r'>
+                          {activeExperienceId === null && (
+                            <button
+                              type='button'
+                              className='btn btn-icon'
+                              onClick={() => {
+                                setActiveExperienceId(id);
+                              }}
+                            >
+                              <span className='icon-container'>
+                                <Icon path={mdiPen} />
+                              </span>
+                              <span className='icon-text'>Edit</span>
+                            </button>
+                          )}
                           <button
                             type='button'
-                            className='btn btn-icon'
+                            className='btn d-flex__row align-items__center gap_1r'
                             onClick={() => {
-                              setActiveExperienceId(id);
+                              handleDeleteExperience(id);
                             }}
+                            title='Delete Profile'
                           >
                             <span className='icon-container'>
-                              <Icon path={mdiPen} />
+                              <Icon path={mdiTrashCan} size={2} />
                             </span>
-                            <span className='icon-text'>Edit</span>
                           </button>
-                        )}
+                        </div>
                       </header>
 
                       {activeExperienceId === id ? (

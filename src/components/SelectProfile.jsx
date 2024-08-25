@@ -112,6 +112,23 @@ function SelectProfile({
     handleProfileUpdate(updatedProfile);
   }
 
+  function handleExperienceDelete(profile, experienceId) {
+    const updatedProfile = {
+      ...profile,
+      work_experience: {
+        ...profile.work_experience,
+        work_experiences: profile.work_experience.work_experiences.filter(
+          (exp) => {
+            return exp.id !== experienceId;
+          },
+        ),
+      },
+      last_edited: dateFormat(),
+    };
+
+    handleProfileUpdate(updatedProfile);
+  }
+
   function handleOpenProfileDetails(profile) {
     return (
       <>
@@ -123,6 +140,7 @@ function SelectProfile({
           onUpdatePersonalDetails={handlePersonalDetailsEdit}
           onUpdateExperienceDetails={handleExperienceDetailsUpdate}
           onCreateExperience={handleExperienceCreate}
+          onDeleteExperience={handleExperienceDelete}
         />
       </>
     );
