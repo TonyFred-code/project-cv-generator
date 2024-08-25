@@ -17,7 +17,10 @@
           "job_title": "Software Engineer",
           "job_description": "Some Job Description",
           "company_name": "Some company",
-          "id": 1
+          "id": 1,
+          "still_on_job": false,
+          "job_start_date": "",
+          "job_end_date": ""
         }
       ]
     },
@@ -70,7 +73,10 @@
           "id": 1,
           "job_title": "Software Engineer",
           "job_description": "Some Job Description",
-          "company_name": "Some company"
+          "company_name": "Some company",
+          "still_on_job": true,
+          "job_start_date": "",
+          "job_end_date": ""
         }
       ]
     },
