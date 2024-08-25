@@ -1,0 +1,10 @@
+.personal-details {
+  display: grid;
+  grid-template-rows: max-content 1fr max-content;
+}
+
+.active.tab-btn {
+  border-radius: 0;
+  border: none;
+  border-bottom: 3px solid blue;
+}

@@ -1,0 +1,113 @@
+[
+  {
+    "personal_details": {
+      "title": "Personal Details",
+      "fullName": "John Doe",
+      "emailAddress": "johndoe@gmail.com",
+      "homeAddress": "0, somewhere off some road, Some Country",
+      "phoneNumber": "+2341234567890",
+      "section_name": "personal_details"
+    },
+
+    "work_experience": {
+      "title": "Work Experience",
+      "section_name": "work_experience",
+      "work_experiences": [
+        {
+          "job_title": "Software Engineer",
+          "job_description": "Some Job Description",
+          "company_name": "Some company",
+          "id": 1,
+          "still_on_job": false,
+          "job_start_date": "",
+          "job_end_date": ""
+        }
+      ]
+    },
+
+    "educational_experience": {
+      "title": "Educational Experience",
+      "section_name": "educational_experience",
+      "educations_experiences": [
+        {
+          "course": "Computer Science",
+          "degree": "B.Tech",
+          "yearStarted": "some date",
+          "stillActive": true,
+          "school": "Federal University of Technology, Akure",
+          "id": 1,
+          "yearEnded": "some date"
+        },
+
+        {
+          "course": "Computer Science",
+          "degree": "B.Tech",
+          "yearStarted": "some date",
+          "yearEnded": "some date",
+          "stillActive": true,
+          "school": "Federal University of Technology, Akure",
+          "id": 2
+        }
+      ]
+    },
+
+    "id": 1,
+    "last_edited": ""
+  },
+
+  {
+    "personal_details": {
+      "title": "Personal Details",
+      "fullName": "John Doe",
+      "emailAddress": "johndoe@gmail.com",
+      "homeAddress": "0, somewhere off some road, Some Country",
+      "phoneNumber": "+2341234567890",
+      "section_name": "personal_details"
+    },
+
+    "work_experience": {
+      "title": "Work Experience",
+      "section_name": "work_experience",
+      "work_experiences": [
+        {
+          "id": 1,
+          "job_title": "Software Engineer",
+          "job_description": "Some Job Description",
+          "company_name": "Some company",
+          "still_on_job": true,
+          "job_start_date": "",
+          "job_end_date": ""
+        }
+      ]
+    },
+
+    "educational_experience": {
+      "title": "Educational Experience",
+      "section_name": "educational_experience",
+      "educations_experiences": [
+        {
+          "course": "Computer Science",
+          "degree": "B.Tech",
+          "yearStarted": "some date",
+          "stillActive": true,
+          "school": "Federal University of Technology, Akure",
+          "id": 1,
+          "yearEnded": "some date"
+        },
+
+        {
+          "course": "Computer Science",
+          "degree": "B.Tech",
+          "yearStarted": "some date",
+          "yearEnded": "some date",
+          "stillActive": true,
+          "school": "Federal University of Technology, Akure",
+          "id": 2
+        }
+      ]
+    },
+
+    "id": 2,
+    "last_edited": ""
+  }
+]
