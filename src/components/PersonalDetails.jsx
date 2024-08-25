@@ -1,6 +1,7 @@
 import { useState } from 'react';
-import BackIconSrc from '/close.svg';
 import '../styles/PersonalDetails.css';
+import Icon from '@mdi/react';
+import { mdiArrowLeftThin } from '@mdi/js';
 
 function PersonalDetails({
   personal_details,
@@ -43,7 +44,7 @@ function PersonalDetails({
           }}
         >
           <span className='icon-container'>
-            <img src={BackIconSrc} alt='' />
+            <Icon path={mdiArrowLeftThin} size={3} />
           </span>
           <span className='icon-text'>Back</span>
         </button>
