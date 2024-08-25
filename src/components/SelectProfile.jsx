@@ -12,121 +12,14 @@ import {
 } from '@mdi/js';
 import dateFormat from 'dateformat';
 
-const defaultProfile = [
-  {
-    personal_details: {
-      title: 'Personal Details',
-      fullName: 'John Doe',
-      emailAddress: 'johndoe@gmail.com',
-      homeAddress: '0, somewhere off some road, Some Country',
-      phoneNumber: '+2341234567890',
-      section_name: 'personal_details',
-    },
-
-    work_experience: {
-      title: 'Work Experience',
-      section_name: 'work_experience',
-      work_experiences: [
-        {
-          job_title: 'Software Engineer',
-          job_description:
-            'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatibus assumenda explicabo aut, consectetur ullam est quod labore soluta excepturi, totam dignissimos voluptates odio cumque deleniti debitis consequuntur suscipit veritatis maiores!',
-          company_name: 'Some company',
-          id: 1,
-        },
-      ],
-    },
-
-    educational_experience: {
-      title: 'Educational Experience',
-      section_name: 'educational_experience',
-      educations_experiences: [
-        {
-          course: 'Computer Science',
-          degree: 'B.Tech',
-          yearStarted: 'some date',
-          stillActive: true,
-          school: 'Federal University of Technology, Akure',
-          id: 1,
-          yearEnded: 'some date',
-        },
-
-        {
-          course: 'Computer Science',
-          degree: 'B.Tech',
-          yearStarted: 'some date',
-          yearEnded: 'some date',
-          stillActive: true,
-          school: 'Federal University of Technology, Akure',
-          id: 2,
-        },
-      ],
-    },
-
-    id: 1,
-    last_edited: dateFormat(),
-  },
-
-  {
-    personal_details: {
-      title: 'Personal Details',
-      fullName: 'John Doe',
-      emailAddress: 'johndoe@gmail.com',
-      homeAddress: '0, somewhere off some road, Some Country',
-      phoneNumber: '+2341234567890',
-      section_name: 'personal_details',
-    },
-
-    work_experience: {
-      title: 'Work Experience',
-      section_name: 'work_experience',
-      work_experiences: [
-        {
-          id: 1,
-          job_title: 'Software Engineer',
-          job_description:
-            'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatibus assumenda explicabo aut, consectetur ullam est quod labore soluta excepturi, totam dignissimos voluptates odio cumque deleniti debitis consequuntur suscipit veritatis maiores!',
-          company_name: 'Some company',
-        },
-      ],
-    },
-
-    educational_experience: {
-      title: 'Educational Experience',
-      section_name: 'educational_experience',
-      educations_experiences: [
-        {
-          course: 'Computer Science',
-          degree: 'B.Tech',
-          yearStarted: 'some date',
-          stillActive: true,
-          school: 'Federal University of Technology, Akure',
-          id: 1,
-          yearEnded: 'some date',
-        },
-
-        {
-          course: 'Computer Science',
-          degree: 'B.Tech',
-          yearStarted: 'some date',
-          yearEnded: 'some date',
-          stillActive: true,
-          school: 'Federal University of Technology, Akure',
-          id: 2,
-        },
-      ],
-    },
-
-    id: 2,
-    last_edited: dateFormat(),
-  },
-];
-
-let nextId = 3;
-
-function SelectProfile({ onClose }) {
+function SelectProfile({
+  onClose,
+  defaultProfiles,
+  onUpdateProfile,
+  onCreateProfile,
+  onDeleteProfile,
+}) {
   const [underDevModalOpen, setUnderDevModalOpen] = useState(false);
-  const [profiles, setProfiles] = useState(defaultProfile);
   const [openProfileDetails, setOpenProfileDetails] = useState(false);
   const [activeProfileId, setActiveProfileId] = useState(1);
 
@@ -139,36 +32,18 @@ function SelectProfile({ onClose }) {
     setOpenProfileDetails(true);
   }
 
+  function handleProfileUpdate(updatedProfile) {
+    onUpdateProfile(updatedProfile);
+  }
+
+  function handleProfileDelete(profileId) {
+    onDeleteProfile(profileId);
+  }
+
   function handleCreateProfile() {
-    const profile = {
-      personal_details: {
-        title: 'Personal Details',
-        fullName: '',
-        emailAddress: '',
-        homeAddress: '',
-        phoneNumber: '',
-        section_name: 'personal_details',
-      },
-
-      work_experience: {
-        title: 'Work Experience',
-        section_name: 'work_experience',
-        work_experiences: [],
-      },
-
-      educational_experience: {
-        title: 'Educational Experience',
-        section_name: 'educational_experience',
-        educations_experiences: [],
-      },
-
-      id: nextId++,
-      last_edited: dateFormat(),
-    };
-
-    setActiveProfileId(profile.id);
+    const profileId = onCreateProfile();
+    setActiveProfileId(profileId);
     setOpenProfileDetails(true);
-    setProfiles([...profiles, profile]);
   }
 
   function handlePersonalDetailsEdit(profile, updatedPersonalDetails) {
@@ -178,22 +53,10 @@ function SelectProfile({ onClose }) {
       last_edited: dateFormat(),
     };
 
-    const updatedProfiles = profiles.map((p) => {
-      if (p.id === updatedProfile.id) {
-        return updatedProfile;
-      } else {
-        return p;
-      }
-    });
-
-    setProfiles(updatedProfiles);
-    console.log(updatedProfiles);
+    handleProfileUpdate(updatedProfile);
   }
 
-  function handleExperienceCreate(profile, experienceDetails) {
-    // const {company_name, job_title, start_date, end_date, still_on_job, job_details } = experienceDetails;
-
-    // const [profile] = profiles.filter((p) => p.id === profileId);
+  function handleExperienceCreate(profile) {
     const experienceIds = profile.work_experience.work_experiences.map(
       (experience) => {
         return experience.id;
@@ -221,31 +84,11 @@ function SelectProfile({ onClose }) {
       last_edited: dateFormat(),
     };
 
-    const updatedProfiles = profiles.map((p) => {
-      if (p.id === updatedProfile.id) {
-        return updatedProfile;
-      } else {
-        return p;
-      }
-    });
-
-    setProfiles(updatedProfiles);
-    // console.log(profileId, experienceDetails);
+    handleProfileUpdate(updatedProfile);
     return maxId + 1;
   }
 
   function handleExperienceDetailsUpdate(profile, updatedExperienceDetails) {
-    // const experienceIds = profile.work_experience.work_experiences.map((experience) => {
-    //   return experience.id;
-    // });
-
-    // const maxId = Math.max(...experienceIds);
-
-    // const newExperience = {
-    //   ...experienceDetails,
-    //   id: maxId + 1,
-    // }
-
     const updatedProfile = {
       ...profile,
       work_experience: {
@@ -266,22 +109,7 @@ function SelectProfile({ onClose }) {
       last_edited: dateFormat(),
     };
 
-    const updatedProfiles = profiles.map((p) => {
-      if (p.id === updatedProfile.id) {
-        return updatedProfile;
-      } else {
-        return p;
-      }
-    });
-
-    setProfiles(updatedProfiles);
-    console.log(profile, updatedExperienceDetails);
-  }
-
-  function handleProfileDelete(profileId) {
-    const newProfiles = profiles.filter((p) => p.id !== profileId);
-
-    setProfiles(newProfiles);
+    handleProfileUpdate(updatedProfile);
   }
 
   function handleOpenProfileDetails(profile) {
@@ -301,7 +129,7 @@ function SelectProfile({ onClose }) {
   }
 
   if (openProfileDetails) {
-    const [activeProfile] = profiles.filter(
+    const [activeProfile] = defaultProfiles.filter(
       (profile) => profile.id === activeProfileId,
     );
 
@@ -337,7 +165,7 @@ function SelectProfile({ onClose }) {
       </header>
       <div>
         <ul className='gap_2r profiles-container'>
-          {profiles.map((profile, index) => {
+          {defaultProfiles.map((profile, index) => {
             const { personal_details } = profile;
             return (
               <li key={profile.id}>
