@@ -9,6 +9,9 @@ import {
   mdiTrashCan,
 } from '@mdi/js';
 
+import dateFormat from 'dateformat';
+import { subYears } from 'date-fns';
+
 function ExperienceDetails({
   experience_details,
   onClose,
@@ -18,6 +21,7 @@ function ExperienceDetails({
 }) {
   const [activeTabId, setActiveTabId] = useState(1);
   const [activeExperienceId, setActiveExperienceId] = useState(null);
+  const [stillOnJob, setStillOnJob] = useState(false);
 
   function handleFormSubmit(e, experienceId) {
     e.preventDefault();
@@ -32,6 +36,11 @@ function ExperienceDetails({
       job_description: elements.job_description.value,
       job_title: elements.job_title.value,
       company_name: elements.company_name.value,
+      job_start_date: elements.time_started.value,
+      still_on_job: elements.on_job.checked,
+      job_end_date: `${
+        elements.on_job.checked ? '' : elements.time_ended.value
+      }`,
     };
 
     setActiveExperienceId(null);
@@ -39,6 +48,9 @@ function ExperienceDetails({
   }
 
   function handleDeleteExperience(experienceId) {
+    if (activeExperienceId === experienceId) {
+      setActiveExperienceId(null);
+    }
     onExperienceDelete(experienceId);
   }
 
@@ -65,6 +77,7 @@ function ExperienceDetails({
             type='button'
             className='btn btn-icon'
             onClick={() => {
+              setStillOnJob(false);
               setActiveExperienceId(onExperienceCreate());
             }}
           >
@@ -112,9 +125,9 @@ function ExperienceDetails({
                     company_name,
                     job_title,
                     job_description,
-                    // start_date,
-                    // end_date,
-                    // still_on_job,
+                    job_start_date,
+                    job_end_date,
+                    still_on_job,
                     id,
                   } = experience_detail;
 
@@ -134,7 +147,7 @@ function ExperienceDetails({
                           </button>
                         )}
                         <h2 className='text-transform__capitalize margin_lr_centering'>
-                          Work Experience {index + 1}
+                          Experience {index + 1}
                         </h2>
                         <div className='d-flex__row align-items_center gap_1r'>
                           {activeExperienceId === null && (
@@ -199,6 +212,58 @@ function ExperienceDetails({
                           </div>
 
                           <div className='form-row d-flex__col gap_1r'>
+                            <label htmlFor='time_started'>Job Started</label>
+                            <input
+                              type='month'
+                              name='time_started'
+                              id='time_started'
+                              defaultValue={job_start_date}
+                              max={dateFormat(new Date().now, 'yyyy-mm')}
+                              min={dateFormat(
+                                subYears(new Date(), 10),
+                                'yyyy-mm',
+                              )}
+                            />
+                          </div>
+
+                          <div className='form-row d-flex__col gap_1r'>
+                            <div className='d-flex__row justify-content__space-between'>
+                              <label htmlFor='time_ended'>Job Ended</label>
+
+                              <span>
+                                <label
+                                  htmlFor='on_job'
+                                  className='d-flex__row align-items__center gap_1r'
+                                >
+                                  <input
+                                    type='checkbox'
+                                    name='on_job'
+                                    id='on_job'
+                                    checked={stillOnJob}
+                                    onChange={() => {
+                                      setStillOnJob(!stillOnJob);
+                                    }}
+                                  />
+                                  Till Present
+                                </label>
+                              </span>
+                            </div>
+                            {!stillOnJob && (
+                              <input
+                                type='month'
+                                name='time_ended'
+                                id='time_ended'
+                                max={dateFormat(new Date().now, 'yyyy-mm')}
+                                min={dateFormat(
+                                  subYears(new Date(), 10),
+                                  'yyyy-mm',
+                                )}
+                                defaultValue={job_end_date}
+                              />
+                            )}
+                          </div>
+
+                          <div className='form-row d-flex__col gap_1r'>
                             <label htmlFor='job_description'>
                               Job Description
                             </label>
@@ -222,6 +287,24 @@ function ExperienceDetails({
                             <p className='light-text'>Job Title</p>
                             <p className='padding-left_1r'>{job_title}</p>
                           </div>
+                          {job_start_date !== '' && (
+                            <div className='detail d-flex__col gap_1r padding_1r'>
+                              <p className='light-text'>Job Started</p>
+                              <p className='padding-left_1r'>
+                                {dateFormat(job_start_date, 'mmmm, yyyy')}
+                              </p>
+                            </div>
+                          )}
+                          {(job_end_date !== '' || still_on_job) && (
+                            <div className='detail d-flex__col gap_1r padding_1r'>
+                              <p className='light-text'>Job Ended</p>
+                              <p className='padding-left_1r'>
+                                {still_on_job
+                                  ? 'Till Present'
+                                  : dateFormat(job_end_date, 'mmmm, yyyy')}
+                              </p>
+                            </div>
+                          )}
                           <div className='detail d-flex__col gap_1r padding_1r'>
                             <p className='light-text'>Job Description</p>
                             <p className='padding-left_1r'>{job_description}</p>
