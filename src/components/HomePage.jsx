@@ -12,7 +12,14 @@ import default_profiles from '../../data/profiles.json';
 function HomePage() {
   const [underDevModalOpen, setUnderDevModalOpen] = useState(false);
   const [selectProfileOpen, setSelectProfileOpen] = useState(false);
-  const [profiles, setProfiles] = useState(default_profiles);
+  const [profiles, setProfiles] = useState(
+    default_profiles.map((profile) => {
+      return {
+        ...profile,
+        last_edited: dateFormat(),
+      };
+    }),
+  );
 
   function toggleDialog() {
     setUnderDevModalOpen(!underDevModalOpen);
