@@ -8,6 +8,8 @@ import { mdiArrowLeftThin, mdiEye } from '@mdi/js';
 function ProfileDetails({
   profileDetails,
   onUpdatePersonalDetails,
+  onUpdateExperienceDetails,
+  onCreateExperience,
   handlePageClose,
 }) {
   const [personalDetailsOpen, setPersonalDetailsOpen] = useState(false);
@@ -19,6 +21,14 @@ function ProfileDetails({
 
   function handlePersonalDetailsUpdate(updatedPersonalDetails) {
     onUpdatePersonalDetails(profileDetails, updatedPersonalDetails);
+  }
+
+  function handleExperienceCreate() {
+    return onCreateExperience(profileDetails);
+  }
+
+  function handleExperienceDetailsUpdate(updatedExperienceDetails) {
+    onUpdateExperienceDetails(profileDetails, updatedExperienceDetails);
   }
 
   if (personalDetailsOpen) {
@@ -34,12 +44,16 @@ function ProfileDetails({
   }
 
   if (experienceDetailsOpen) {
+    console.log(work_experience);
+
     return (
       <ExperienceDetails
-        experience_details={work_experience}
+        experience_details={work_experience.work_experiences}
         onClose={() => {
           setExperienceDetailsOpen(false);
         }}
+        onUpdateExperienceDetails={handleExperienceDetailsUpdate}
+        onExperienceCreate={handleExperienceCreate}
       />
     );
   }
@@ -62,11 +76,11 @@ function ProfileDetails({
           <span className='icon-text'>Back</span>
         </button>
         <h1 className='profile-page-title'>Profile</h1>
-        <button className='btn d-flex__row align-items__center gap_1r'>
+        <button className='btn btn-icon d-flex__row align-items__center gap_1r'>
           <span className='icon-container'>
             <Icon path={mdiEye} size={2} />
           </span>
-          <span>View CV</span>
+          <span className='icon-text'>View CV</span>
         </button>
       </header>
       <div className='container'>
