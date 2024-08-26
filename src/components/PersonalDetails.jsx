@@ -1,7 +1,8 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import '../styles/PersonalDetails.css';
 import Icon from '@mdi/react';
 import { mdiArrowLeftThin } from '@mdi/js';
+import PersonalDetailsForm from './PersonalDetailsForm';
 
 function PersonalDetails({
   personal_details,
@@ -9,28 +10,21 @@ function PersonalDetails({
   onClose,
 }) {
   const [activeTabId, setActiveTabId] = useState(1);
+  const [editMode, setEditMode] = useState(false);
+  const formRef = useRef(null);
 
   const { fullName, emailAddress, phoneNumber, homeAddress } = personal_details;
 
-  function handleFormSubmit(e) {
-    e.preventDefault();
-
-    const { elements } = e.target;
-
-    const newFullNameValue = elements.full_name.value;
-    const newEmailValue = elements.email.value;
-    const newAddressValue = elements.address.value;
-    const newPhoneNumberValue = elements.phone_number.value;
-
-    const newPersonalDetails = {
+  function handleFormSubmit(newPersonalDetails) {
+    setEditMode(false);
+    const updatedPersonalDetails = {
       ...personal_details,
-      fullName: newFullNameValue,
-      emailAddress: newEmailValue,
-      homeAddress: newAddressValue,
-      phoneNumber: newPhoneNumberValue,
+      ...newPersonalDetails,
     };
 
-    onUpdatePersonalDetails(newPersonalDetails);
+    console.log(updatedPersonalDetails);
+
+    onUpdatePersonalDetails(updatedPersonalDetails);
   }
 
   return (
@@ -79,58 +73,35 @@ function PersonalDetails({
 
         <div className='active-tab-view'>
           {activeTabId === 1 ? (
-            <form
-              onSubmit={handleFormSubmit}
-              id='personal_details_form'
-              autoComplete='true'
-              autoCorrect='true'
-              className='d-flex__col gap_2r'
-            >
-              <div className='form-row d-flex__col gap_1r'>
-                <label htmlFor='full_name'>Full Name</label>
-                <input
-                  required
-                  type='text'
-                  defaultValue={fullName}
-                  name='full_name'
-                  id='full_name'
-                />
+            editMode ? (
+              <PersonalDetailsForm
+                onFormSubmit={handleFormSubmit}
+                full_name={fullName}
+                email_address={emailAddress}
+                home_address={homeAddress}
+                phone_number={phoneNumber}
+                ref={formRef}
+              />
+            ) : (
+              <div>
+                <div className='detail d-flex__col gap_1r padding_1r'>
+                  <p className='light-text'>Full Name</p>
+                  <p className='padding-left_1r'>{fullName}</p>
+                </div>
+                <div className='detail d-flex__col gap_1r padding_1r'>
+                  <p className='light-text'>Phone Number</p>
+                  <p className='padding-left_1r'>{phoneNumber}</p>
+                </div>
+                <div className='detail d-flex__col gap_1r padding_1r'>
+                  <p className='light-text'>Email Address</p>
+                  <p className='padding-left_1r'>{emailAddress}</p>
+                </div>
+                <div className='detail d-flex__col gap_1r padding_1r'>
+                  <p className='light-text'>Home Address</p>
+                  <p className='padding-left_1r'>{homeAddress}</p>
+                </div>
               </div>
-
-              <div className='form-row d-flex__col gap_1r'>
-                <label htmlFor='address'>Address</label>
-                <textarea
-                  rows={5}
-                  cols={30}
-                  required
-                  name='address'
-                  id='address'
-                  defaultValue={homeAddress}
-                ></textarea>
-              </div>
-
-              <div className='form-row d-flex__col gap_1r'>
-                <label htmlFor='email'>Email</label>
-                <input
-                  required
-                  type='email'
-                  name='email'
-                  defaultValue={emailAddress}
-                  id='email'
-                />
-              </div>
-
-              <div className='form-row d-flex__col gap_1r'>
-                <label htmlFor='phone_number'>Phone Number</label>
-                <input
-                  type='tel'
-                  required
-                  name='phone_number'
-                  defaultValue={phoneNumber}
-                  id='phone_number'
-                />
-              </div>
-            </form>
+            )
           ) : (
             <div className='container'>
               <ul className='d-flex__col gap_2r padding_2r align-items__center'>
@@ -159,9 +130,26 @@ function PersonalDetails({
 
       {activeTabId === 1 && (
         <footer className='d-flex__col'>
-          <button type='submit' form='personal_details_form' className='btn'>
-            Save Changes
-          </button>
+          {editMode ? (
+            <button
+              type='submit'
+              onClick={() => {
+                formRef.current.requestSubmit();
+              }}
+              className='btn'
+            >
+              Save Changes
+            </button>
+          ) : (
+            <button
+              type='button'
+              onClick={() => {
+                setEditMode(true);
+              }}
+            >
+              Edit Details
+            </button>
+          )}
         </footer>
       )}
     </div>
