@@ -91,6 +91,14 @@ button:focus-visible {
   font-size: 1.8rem;
 }
 
+ul.help-list {
+  list-style-type: disc;
+}
+
+ul.help-list {
+  margin-left: 1.5rem;
+}
+
 .light-text {
   color: gray;
 }
