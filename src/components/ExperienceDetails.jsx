@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import '../styles/ExperienceDetails.css';
 import Icon from '@mdi/react';
 import {
   mdiArrowLeftThin,
