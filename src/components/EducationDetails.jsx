@@ -1,5 +1,4 @@
-import { useState } from 'react';
-// import '../styles/EducationDetails.css';
+import { useRef, useState } from 'react';
 import Icon from '@mdi/react';
 import {
   mdiArrowLeftThin,
@@ -10,7 +9,7 @@ import {
 } from '@mdi/js';
 
 import dateFormat from 'dateformat';
-import { subYears } from 'date-fns';
+import EducationDetailsForm from './EducationDetailsForm';
 
 function EducationDetails({
   education_details,
@@ -21,29 +20,11 @@ function EducationDetails({
 }) {
   const [activeTabId, setActiveTabId] = useState(1);
   const [activeEducationId, setActiveEducationId] = useState(null);
-  const [stillLearning, setStillLearning] = useState(false);
+  const formRef = useRef(null);
 
-  function handleFormSubmit(e, experienceId) {
-    e.preventDefault();
-
-    const { elements } = e.target;
-    const [education_detail] = education_details.filter(
-      (exp) => exp.id === experienceId,
-    );
-
-    const newEducationDetails = {
-      ...education_detail,
-      date_started: elements.date_started.value,
-      study_title: elements.study_title.value,
-      school_name: elements.school_name.value,
-      still_in_study: elements.in_study.checked,
-      date_ended: `${
-        elements.in_study.checked ? '' : elements.date_ended.value
-      }`,
-    };
-
+  function handleFormSubmit(updatedEducationExperienceDetails) {
     setActiveEducationId(null);
-    onUpdateEducationDetails(newEducationDetails);
+    onUpdateEducationDetails(updatedEducationExperienceDetails);
   }
 
   function handleDeleteExperience(experienceId) {
@@ -70,13 +51,14 @@ function EducationDetails({
           </span>
           <span className='icon-text'>Back</span>
         </button>
-        <h1 className='text-transform__capitalize margin_lr_centering'>Work</h1>
+        <h1 className='text-transform__capitalize margin_lr_centering'>
+          education
+        </h1>
         {activeEducationId === null && activeTabId === 1 && (
           <button
             type='button'
             className='btn btn-icon'
             onClick={() => {
-              setStillLearning(false);
               setActiveEducationId(onEducationCreate());
             }}
           >
@@ -92,17 +74,17 @@ function EducationDetails({
         <div className='tab-area d-flex__row align-items__center justify-content__space-around padding_1r'>
           <button
             className={`personal_details_view_tab tab-btn btn ${
-              activeTabId === 1 && 'active'
+              activeTabId === 1 ? 'active' : ''
             }`}
             onClick={() => {
               setActiveTabId(1);
             }}
           >
-            <span>Education Experience</span>
+            <span>Experiences</span>
           </button>
           <button
             className={`help_view_tab tab-btn btn ${
-              activeTabId === 2 && 'active'
+              activeTabId === 2 ? 'active' : ''
             }`}
             onClick={() => {
               [setActiveTabId(2)];
@@ -135,7 +117,9 @@ function EducationDetails({
                         {activeEducationId === id && (
                           <button
                             type='submit'
-                            form={`education_details_form_${id}`}
+                            onClick={() => {
+                              formRef.current.requestSubmit();
+                            }}
                             className='btn btn-icon'
                           >
                             <span className='icon-container'>
@@ -178,89 +162,17 @@ function EducationDetails({
                       </header>
 
                       {activeEducationId === id ? (
-                        <form
-                          id={`education_details_form_${id}`}
-                          autoComplete='true'
-                          autoCorrect='true'
-                          className='d-flex__col gap_2r experience-card-edit'
-                          onSubmit={(e) => {
-                            handleFormSubmit(e, id);
-                          }}
-                        >
-                          <div className='form-row d-flex__col gap_1r'>
-                            <label htmlFor='school_name'>School Name</label>
-                            <input
-                              required
-                              type='text'
-                              defaultValue={school_name}
-                              name='school_name'
-                              id='school_name'
-                            />
-                          </div>
-
-                          <div className='form-row d-flex__col gap_1r'>
-                            <label htmlFor='study_title'>Title of Study</label>
-                            <input
-                              required
-                              type='text'
-                              defaultValue={study_title}
-                              name='study_title'
-                              id='study_title'
-                            />
-                          </div>
-
-                          <div className='form-row d-flex__col gap_1r'>
-                            <label htmlFor='date_started'>Started Study</label>
-                            <input
-                              type='month'
-                              name='date_started'
-                              id='date_started'
-                              defaultValue={date_started}
-                              max={dateFormat(new Date().now, 'yyyy-mm')}
-                              min={dateFormat(
-                                subYears(new Date(), 10),
-                                'yyyy-mm',
-                              )}
-                            />
-                          </div>
-
-                          <div className='form-row d-flex__col gap_1r'>
-                            <div className='d-flex__row justify-content__space-between'>
-                              <label htmlFor='date_ended'>Study Ended</label>
-
-                              <span>
-                                <label
-                                  htmlFor='in_study'
-                                  className='d-flex__row align-items__center gap_1r'
-                                >
-                                  <input
-                                    type='checkbox'
-                                    name='in_study'
-                                    id='in_study'
-                                    checked={stillLearning}
-                                    onChange={() => {
-                                      setStillLearning(!stillLearning);
-                                    }}
-                                  />
-                                  Till Present
-                                </label>
-                              </span>
-                            </div>
-                            {!stillLearning && (
-                              <input
-                                type='month'
-                                name='date_ended'
-                                id='date_ended'
-                                max={dateFormat(new Date().now, 'yyyy-mm')}
-                                min={dateFormat(
-                                  subYears(new Date(), 10),
-                                  'yyyy-mm',
-                                )}
-                                defaultValue={date_ended}
-                              />
-                            )}
-                          </div>
-                        </form>
+                        <EducationDetailsForm
+                          onFormSubmit={handleFormSubmit}
+                          experience_id={activeEducationId}
+                          still_on_study={still_in_study}
+                          school_name={school_name}
+                          study_title={study_title}
+                          date_ended={date_ended}
+                          key={activeEducationId}
+                          date_started={date_started}
+                          ref={formRef}
+                        />
                       ) : (
                         <div>
                           <div className='detail d-flex__col gap_1r padding_1r'>
