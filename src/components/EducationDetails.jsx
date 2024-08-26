@@ -209,7 +209,29 @@ function EducationDetails({
               </div>
             </>
           ) : (
-            <div> Education Experience Help</div>
+            <div className='d-flex__col gap_2r '>
+              <div className='d-flex__col gap_1r'>
+                <h3>Do</h3>
+                <ul className='help-list d-flex__col gap_1r padding-left_1r'>
+                  <li>Start with your highest education attainment</li>
+                  <li>List your education in reverse-chronological order</li>
+                  <li>
+                    Graduation date is optional if you earned it more than five
+                    years ago
+                  </li>
+                </ul>
+              </div>
+
+              <div className='d-flex__col gap_1r'>
+                <h3>Don&apos;t</h3>
+                <ul className='help-list d-flex__col gap_1r padding-left_1r'>
+                  <li>
+                    Don&apos;t include your GPA / exam mark if it is very low
+                  </li>
+                  <li>Don&apos;t embellish or falsify things</li>
+                </ul>
+              </div>
+            </div>
           )}
         </div>
       </div>

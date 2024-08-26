@@ -212,7 +212,33 @@ function ExperienceDetails({
               </div>
             </>
           ) : (
-            <div> Work Experience Help</div>
+            <div className='d-flex__col gap_2r '>
+              <div className='d-flex__col gap_1r'>
+                <h3>Do</h3>
+                <ul className='help-list d-flex__col gap_1r padding-left_1r'>
+                  <li>Tailor your work experience section to each job</li>
+                  <li>Job description should be 2 or 3 lines</li>
+                  <li>
+                    Your resume / cv should be 1 page or 2 pages if you have
+                    more experience
+                  </li>
+                  <li>
+                    Job description is optional for older or irrelevant work
+                    experience to applied job
+                  </li>
+                  <li>Do check grammar, punctuation and spelling</li>
+                </ul>
+              </div>
+
+              <div className='d-flex__col gap_1r'>
+                <h3>Don&apos;t</h3>
+                <ul className='help-list d-flex__col gap_1r padding-left_1r'>
+                  <li>
+                    Don&apos;t put too much into your work experience section
+                  </li>
+                </ul>
+              </div>
+            </div>
           )}
         </div>
       </div>
