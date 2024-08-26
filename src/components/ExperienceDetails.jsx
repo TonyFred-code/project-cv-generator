@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import Icon from '@mdi/react';
 import {
   mdiArrowLeftThin,
@@ -9,7 +9,7 @@ import {
 } from '@mdi/js';
 
 import dateFormat from 'dateformat';
-import { subYears } from 'date-fns';
+import ExperienceDetailsForm from './ExperienceDetailsForm';
 
 function ExperienceDetails({
   experience_details,
@@ -20,30 +20,11 @@ function ExperienceDetails({
 }) {
   const [activeTabId, setActiveTabId] = useState(1);
   const [activeExperienceId, setActiveExperienceId] = useState(null);
-  const [stillOnJob, setStillOnJob] = useState(false);
+  const formRef = useRef(null);
 
-  function handleFormSubmit(e, experienceId) {
-    e.preventDefault();
-
-    const { elements } = e.target;
-    const [experience_detail] = experience_details.filter(
-      (exp) => exp.id === experienceId,
-    );
-
-    const newExperienceDetail = {
-      ...experience_detail,
-      job_description: elements.job_description.value,
-      job_title: elements.job_title.value,
-      company_name: elements.company_name.value,
-      job_start_date: elements.time_started.value,
-      still_on_job: elements.on_job.checked,
-      job_end_date: `${
-        elements.on_job.checked ? '' : elements.time_ended.value
-      }`,
-    };
-
+  function handleFormSubmit(updatedExperienceDetails) {
     setActiveExperienceId(null);
-    onUpdateExperienceDetails(newExperienceDetail);
+    onUpdateExperienceDetails(updatedExperienceDetails);
   }
 
   function handleDeleteExperience(experienceId) {
@@ -76,7 +57,6 @@ function ExperienceDetails({
             type='button'
             className='btn btn-icon'
             onClick={() => {
-              setStillOnJob(false);
               setActiveExperienceId(onExperienceCreate());
             }}
           >
@@ -136,7 +116,9 @@ function ExperienceDetails({
                         {activeExperienceId === id && (
                           <button
                             type='submit'
-                            form={`experience_details_form_${id}`}
+                            onClick={() => {
+                              formRef.current.requestSubmit();
+                            }}
                             className='btn btn-icon'
                           >
                             <span className='icon-container'>
@@ -179,103 +161,17 @@ function ExperienceDetails({
                       </header>
 
                       {activeExperienceId === id ? (
-                        <form
-                          id={`experience_details_form_${id}`}
-                          autoComplete='true'
-                          autoCorrect='true'
-                          className='d-flex__col gap_2r experience-card-edit'
-                          onSubmit={(e) => {
-                            handleFormSubmit(e, id);
-                          }}
-                        >
-                          <div className='form-row d-flex__col gap_1r'>
-                            <label htmlFor='company_name'>Company Name</label>
-                            <input
-                              required
-                              type='text'
-                              defaultValue={company_name}
-                              name='company_name'
-                              id='company_name'
-                            />
-                          </div>
-
-                          <div className='form-row d-flex__col gap_1r'>
-                            <label htmlFor='job_title'>Job Title</label>
-                            <input
-                              required
-                              type='text'
-                              defaultValue={job_title}
-                              name='job_title'
-                              id='job_title'
-                            />
-                          </div>
-
-                          <div className='form-row d-flex__col gap_1r'>
-                            <label htmlFor='time_started'>Job Started</label>
-                            <input
-                              type='month'
-                              name='time_started'
-                              id='time_started'
-                              defaultValue={job_start_date}
-                              max={dateFormat(new Date().now, 'yyyy-mm')}
-                              min={dateFormat(
-                                subYears(new Date(), 10),
-                                'yyyy-mm',
-                              )}
-                            />
-                          </div>
-
-                          <div className='form-row d-flex__col gap_1r'>
-                            <div className='d-flex__row justify-content__space-between'>
-                              <label htmlFor='time_ended'>Job Ended</label>
-
-                              <span>
-                                <label
-                                  htmlFor='on_job'
-                                  className='d-flex__row align-items__center gap_1r'
-                                >
-                                  <input
-                                    type='checkbox'
-                                    name='on_job'
-                                    id='on_job'
-                                    checked={stillOnJob}
-                                    onChange={() => {
-                                      setStillOnJob(!stillOnJob);
-                                    }}
-                                  />
-                                  Till Present
-                                </label>
-                              </span>
-                            </div>
-                            {!stillOnJob && (
-                              <input
-                                type='month'
-                                name='time_ended'
-                                id='time_ended'
-                                max={dateFormat(new Date().now, 'yyyy-mm')}
-                                min={dateFormat(
-                                  subYears(new Date(), 10),
-                                  'yyyy-mm',
-                                )}
-                                defaultValue={job_end_date}
-                              />
-                            )}
-                          </div>
-
-                          <div className='form-row d-flex__col gap_1r'>
-                            <label htmlFor='job_description'>
-                              Job Description
-                            </label>
-                            <textarea
-                              rows={8}
-                              cols={30}
-                              required
-                              name='job_description'
-                              id='job_description'
-                              defaultValue={job_description}
-                            ></textarea>
-                          </div>
-                        </form>
+                        <ExperienceDetailsForm
+                          experience_id={activeExperienceId}
+                          onFormSubmit={handleFormSubmit}
+                          job_description={job_description}
+                          job_title={job_title}
+                          job_end_date={job_end_date}
+                          job_start_date={job_start_date}
+                          still_on_job={still_on_job}
+                          company_name={company_name}
+                          ref={formRef}
+                        />
                       ) : (
                         <div>
                           <div className='detail d-flex__col gap_1r padding_1r'>
