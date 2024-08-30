@@ -130,7 +130,7 @@ function ExperienceDetails({
                         <h2 className='text-transform__capitalize margin_lr_centering'>
                           Experience {index + 1}
                         </h2>
-                        <div className='d-flex__row align-items_center gap_1r'>
+                        <div className='d-flex__row align-items__center gap_1r'>
                           {activeExperienceId === null && (
                             <button
                               type='button'

@@ -131,7 +131,7 @@ function EducationDetails({
                         <h2 className='text-transform__capitalize margin_lr_centering'>
                           Experience {index + 1}
                         </h2>
-                        <div className='d-flex__row align-items_center gap_1r'>
+                        <div className='d-flex__row align-items__center gap_1r'>
                           {activeEducationId === null && (
                             <button
                               type='button'

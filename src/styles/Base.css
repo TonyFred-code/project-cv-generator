@@ -81,6 +81,30 @@ button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
 
+#root {
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+.icon-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  box-sizing: content-box;
+}
+
+.btn-icon {
+  padding: 0.6rem 0.8rem;
+  box-sizing: content-box;
+}
+
+.btn-icon .icon-text {
+  display: none;
+}
+
 .container {
   margin: 0 auto;
   max-width: 1128px;
@@ -185,34 +209,6 @@ ul.help-list {
   cursor: pointer;
 }
 
-@media (min-width: 900px) {
-  html {
-    font-size: 13px;
-  }
-}
-
-#root {
-  width: 100%;
-  max-width: 1280px;
-  margin: 0 auto;
-}
-
-.icon-container {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 2rem;
-  height: 2rem;
-}
-
-.btn-icon {
-  padding: 1rem 1.2rem;
-}
-
-.btn-icon .icon-text {
-  display: none;
-}
-
 @media (min-width: 768px) {
   html {
     font-size: 11px;
@@ -230,11 +226,21 @@ ul.help-list {
     padding: 1rem 1.2rem;
   }
 
+  .btn-icon {
+    padding: 0.6rem 1.2rem;
+  }
+
   .btn-icon .icon-container {
     display: none;
   }
 
   .btn .icon-text {
     display: inline-block;
+  }
+}
+
+@media (min-width: 900px) {
+  html {
+    font-size: 13px;
   }
 }
