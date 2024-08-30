@@ -7,6 +7,7 @@
 }
 
 #root > * {
+  width: 100%;
   min-height: 100vh;
 }
 
@@ -81,12 +82,6 @@ button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
 
-#root {
-  width: 100%;
-  max-width: 1280px;
-  margin: 0 auto;
-}
-
 .icon-container {
   display: flex;
   align-items: center;
@@ -106,6 +101,7 @@ button:focus-visible {
 }
 
 .container {
+  width: 80%;
   margin: 0 auto;
   max-width: 1128px;
 }
