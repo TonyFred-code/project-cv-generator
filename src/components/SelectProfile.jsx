@@ -129,6 +129,85 @@ function SelectProfile({
     handleProfileUpdate(updatedProfile);
   }
 
+  function handleEducationExperienceCreate(profile) {
+    const experienceIds =
+      profile.educational_experience.educations_experiences.map(
+        (experience) => {
+          return experience.id;
+        },
+      );
+
+    const maxId = Math.max(...experienceIds);
+
+    const newEducationExperience = {
+      study_title: '',
+      date_started: '',
+      still_in_study: false,
+      school_name: '',
+      id: maxId + 1,
+      date_ended: '',
+    };
+
+    const updatedProfile = {
+      ...profile,
+      educational_experience: {
+        ...profile.educational_experience,
+        educations_experiences: [
+          ...profile.educational_experience.educations_experiences,
+          newEducationExperience,
+        ],
+      },
+      last_edited: dateFormat(),
+    };
+
+    handleProfileUpdate(updatedProfile);
+    return maxId + 1;
+  }
+
+  function handleEducationExperienceDetailsUpdate(
+    profile,
+    updatedEducationExperienceDetails,
+  ) {
+    const updatedProfile = {
+      ...profile,
+      educational_experience: {
+        ...profile.educational_experience,
+        educations_experiences:
+          profile.educational_experience.educations_experiences.map((exp) => {
+            if (exp.id === updatedEducationExperienceDetails.id) {
+              return {
+                ...exp,
+                ...updatedEducationExperienceDetails,
+              };
+            } else {
+              return exp;
+            }
+          }),
+      },
+      last_edited: dateFormat(),
+    };
+
+    handleProfileUpdate(updatedProfile);
+  }
+
+  function handleEducationExperienceDelete(profile, experienceId) {
+    const updatedProfile = {
+      ...profile,
+      educational_experience: {
+        ...profile.educational_experience,
+        educations_experiences:
+          profile.educational_experience.educations_experiences.filter(
+            (exp) => {
+              return exp.id !== experienceId;
+            },
+          ),
+      },
+      last_edited: dateFormat(),
+    };
+
+    handleProfileUpdate(updatedProfile);
+  }
+
   function handleOpenProfileDetails(profile) {
     return (
       <>
@@ -141,6 +220,9 @@ function SelectProfile({
           onUpdateExperienceDetails={handleExperienceDetailsUpdate}
           onCreateExperience={handleExperienceCreate}
           onDeleteExperience={handleExperienceDelete}
+          onCreateEducationExperience={handleEducationExperienceCreate}
+          onDeleteEducationExperience={handleEducationExperienceDelete}
+          onUpdateEducationDetails={handleEducationExperienceDetailsUpdate}
         />
       </>
     );

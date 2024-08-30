@@ -4,7 +4,6 @@ import Modal from './UnderDevelopment';
 import SelectProfile from './SelectProfile';
 import Icon from '@mdi/react';
 import { mdiDownloadBox, mdiSquareEditOutline } from '@mdi/js';
-import '../styles/HomePage.css';
 import dateFormat from 'dateformat';
 
 import default_profiles from '../../data/profiles.json';

@@ -4,6 +4,7 @@ import PersonalDetails from './PersonalDetails';
 import ExperienceDetails from './ExperienceDetails';
 import Icon from '@mdi/react';
 import { mdiArrowLeftThin, mdiEye } from '@mdi/js';
+import EducationDetails from './EducationDetails';
 
 function ProfileDetails({
   profileDetails,
@@ -11,6 +12,9 @@ function ProfileDetails({
   onUpdateExperienceDetails,
   onDeleteExperience,
   onCreateExperience,
+  onUpdateEducationDetails,
+  onDeleteEducationExperience,
+  onCreateEducationExperience,
   handlePageClose,
 }) {
   const [personalDetailsOpen, setPersonalDetailsOpen] = useState(false);
@@ -34,6 +38,20 @@ function ProfileDetails({
 
   function handleExperienceDetailsUpdate(updatedExperienceDetails) {
     onUpdateExperienceDetails(profileDetails, updatedExperienceDetails);
+  }
+
+  function handleEducationExperienceCreate() {
+    return onCreateEducationExperience(profileDetails);
+  }
+
+  function handleEducationExperienceDelete(experienceId) {
+    onDeleteEducationExperience(profileDetails, experienceId);
+  }
+
+  function handleEducationExperienceDetailsUpdate(
+    updatedEducationExperienceDetails,
+  ) {
+    onUpdateEducationDetails(profileDetails, updatedEducationExperienceDetails);
   }
 
   if (personalDetailsOpen) {
@@ -64,7 +82,19 @@ function ProfileDetails({
     );
   }
 
-  // if ()
+  if (educationDetailsOpen) {
+    return (
+      <EducationDetails
+        education_details={educational_experience.educations_experiences}
+        onClose={() => {
+          setEducationDetailsOpen(false);
+        }}
+        onUpdateEducationDetails={handleEducationExperienceDetailsUpdate}
+        onEducationCreate={handleEducationExperienceCreate}
+        onEducationDelete={handleEducationExperienceDelete}
+      />
+    );
+  }
 
   return (
     <div className='profile-details-container'>

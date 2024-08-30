@@ -30,22 +30,20 @@
       "section_name": "educational_experience",
       "educations_experiences": [
         {
-          "course": "Computer Science",
-          "degree": "B.Tech",
-          "yearStarted": "some date",
-          "stillActive": true,
-          "school": "Federal University of Technology, Akure",
+          "study_title": "Computer Science",
+          "date_started": "",
+          "still_in_study": true,
+          "school_name": "Federal University of Technology, Akure",
           "id": 1,
-          "yearEnded": "some date"
+          "date_ended": ""
         },
 
         {
-          "course": "Computer Science",
-          "degree": "B.Tech",
-          "yearStarted": "some date",
-          "yearEnded": "some date",
-          "stillActive": true,
-          "school": "Federal University of Technology, Akure",
+          "study_title": "Computer Science",
+          "date_started": "",
+          "date_ended": "",
+          "still_in_study": false,
+          "school_name": "Federal University of Technology, Akure",
           "id": 2
         }
       ]
@@ -86,22 +84,20 @@
       "section_name": "educational_experience",
       "educations_experiences": [
         {
-          "course": "Computer Science",
-          "degree": "B.Tech",
-          "yearStarted": "some date",
-          "stillActive": true,
-          "school": "Federal University of Technology, Akure",
+          "study_title": "Computer Science",
+          "date_started": "",
+          "still_in_study": false,
+          "school_name": "Federal University of Technology, Akure",
           "id": 1,
-          "yearEnded": "some date"
+          "date_ended": ""
         },
 
         {
-          "course": "Computer Science",
-          "degree": "B.Tech",
-          "yearStarted": "some date",
-          "yearEnded": "some date",
-          "stillActive": true,
-          "school": "Federal University of Technology, Akure",
+          "study_title": "Computer Science",
+          "date_started": "",
+          "date_ended": "",
+          "still_in_study": true,
+          "school_name": "Federal University of Technology, Akure",
           "id": 2
         }
       ]

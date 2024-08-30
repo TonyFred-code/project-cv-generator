@@ -9,32 +9,32 @@ import {
 } from '@mdi/js';
 
 import dateFormat from 'dateformat';
-import ExperienceDetailsForm from './ExperienceDetailsForm';
+import EducationDetailsForm from './EducationDetailsForm';
 
-function ExperienceDetails({
-  experience_details,
+function EducationDetails({
+  education_details,
   onClose,
-  onUpdateExperienceDetails,
-  onExperienceCreate,
-  onExperienceDelete,
+  onUpdateEducationDetails,
+  onEducationCreate,
+  onEducationDelete,
 }) {
   const [activeTabId, setActiveTabId] = useState(1);
-  const [activeExperienceId, setActiveExperienceId] = useState(null);
+  const [activeEducationId, setActiveEducationId] = useState(null);
   const formRef = useRef(null);
 
-  function handleFormSubmit(updatedExperienceDetails) {
-    setActiveExperienceId(null);
-    onUpdateExperienceDetails(updatedExperienceDetails);
+  function handleFormSubmit(updatedEducationExperienceDetails) {
+    setActiveEducationId(null);
+    onUpdateEducationDetails(updatedEducationExperienceDetails);
   }
 
   function handleDeleteExperience(experienceId) {
-    if (activeExperienceId === experienceId) {
-      setActiveExperienceId(null);
+    if (activeEducationId === experienceId) {
+      setActiveEducationId(null);
     }
-    onExperienceDelete(experienceId);
+    onEducationDelete(experienceId);
   }
 
-  console.log(experience_details);
+  console.log(education_details);
 
   return (
     <div className='personal-details padding_2r'>
@@ -51,13 +51,15 @@ function ExperienceDetails({
           </span>
           <span className='icon-text'>Back</span>
         </button>
-        <h1 className='text-transform__capitalize margin_lr_centering'>Work</h1>
-        {activeExperienceId === null && activeTabId === 1 && (
+        <h1 className='text-transform__capitalize margin_lr_centering'>
+          education
+        </h1>
+        {activeEducationId === null && activeTabId === 1 && (
           <button
             type='button'
             className='btn btn-icon'
             onClick={() => {
-              setActiveExperienceId(onExperienceCreate());
+              setActiveEducationId(onEducationCreate());
             }}
           >
             <span className='icon-container'>
@@ -72,17 +74,17 @@ function ExperienceDetails({
         <div className='tab-area d-flex__row align-items__center justify-content__space-around padding_1r'>
           <button
             className={`personal_details_view_tab tab-btn btn ${
-              activeTabId === 1 && 'active'
+              activeTabId === 1 ? 'active' : ''
             }`}
             onClick={() => {
               setActiveTabId(1);
             }}
           >
-            <span>Work Experience</span>
+            <span>Experiences</span>
           </button>
           <button
             className={`help_view_tab tab-btn btn ${
-              activeTabId === 2 && 'active'
+              activeTabId === 2 ? 'active' : ''
             }`}
             onClick={() => {
               [setActiveTabId(2)];
@@ -96,24 +98,23 @@ function ExperienceDetails({
           {activeTabId === 1 ? (
             <>
               <header>
-                <h1 className='text-align__center'>Work Experiences</h1>
+                <h1 className='text-align__center'>Education Experiences</h1>
               </header>
               <div className='d-flex__col gap_2r padding_1r'>
-                {experience_details.map((experience_detail, index) => {
+                {education_details.map((education_detail, index) => {
                   const {
-                    company_name,
-                    job_title,
-                    job_description,
-                    job_start_date,
-                    job_end_date,
-                    still_on_job,
+                    school_name,
+                    study_title,
+                    date_started,
+                    date_ended,
+                    still_in_study,
                     id,
-                  } = experience_detail;
+                  } = education_detail;
 
                   return (
                     <div className='experience-card' key={id}>
                       <header className='d-flex__row align-items__center'>
-                        {activeExperienceId === id && (
+                        {activeEducationId === id && (
                           <button
                             type='submit'
                             onClick={() => {
@@ -131,12 +132,12 @@ function ExperienceDetails({
                           Experience {index + 1}
                         </h2>
                         <div className='d-flex__row align-items__center gap_1r'>
-                          {activeExperienceId === null && (
+                          {activeEducationId === null && (
                             <button
                               type='button'
                               className='btn btn-icon'
                               onClick={() => {
-                                setActiveExperienceId(id);
+                                setActiveEducationId(id);
                               }}
                             >
                               <span className='icon-container'>
@@ -160,50 +161,46 @@ function ExperienceDetails({
                         </div>
                       </header>
 
-                      {activeExperienceId === id ? (
-                        <ExperienceDetailsForm
-                          experience_id={activeExperienceId}
+                      {activeEducationId === id ? (
+                        <EducationDetailsForm
                           onFormSubmit={handleFormSubmit}
-                          job_description={job_description}
-                          job_title={job_title}
-                          job_end_date={job_end_date}
-                          job_start_date={job_start_date}
-                          still_on_job={still_on_job}
-                          company_name={company_name}
+                          experience_id={activeEducationId}
+                          still_on_study={still_in_study}
+                          school_name={school_name}
+                          study_title={study_title}
+                          date_ended={date_ended}
+                          key={activeEducationId}
+                          date_started={date_started}
                           ref={formRef}
                         />
                       ) : (
                         <div>
                           <div className='detail d-flex__col gap_1r padding_1r'>
-                            <p className='light-text'>Company Name</p>
-                            <p className='padding-left_1r'>{company_name}</p>
+                            <p className='light-text'>School Name</p>
+                            <p className='padding-left_1r'>{school_name}</p>
                           </div>
                           <div className='detail d-flex__col gap_1r padding_1r'>
-                            <p className='light-text'>Job Title</p>
-                            <p className='padding-left_1r'>{job_title}</p>
+                            <p className='light-text'>title of study</p>
+                            <p className='padding-left_1r'>{study_title}</p>
                           </div>
-                          {job_start_date !== '' && (
+                          {date_started !== '' && (
                             <div className='detail d-flex__col gap_1r padding_1r'>
-                              <p className='light-text'>Job Started</p>
+                              <p className='light-text'>Started Studying</p>
                               <p className='padding-left_1r'>
-                                {dateFormat(job_start_date, 'mmmm, yyyy')}
+                                {dateFormat(date_started, 'mmmm, yyyy')}
                               </p>
                             </div>
                           )}
-                          {(job_end_date !== '' || still_on_job) && (
+                          {(date_ended !== '' || still_in_study) && (
                             <div className='detail d-flex__col gap_1r padding_1r'>
-                              <p className='light-text'>Job Ended</p>
+                              <p className='light-text'>Finished Studying</p>
                               <p className='padding-left_1r'>
-                                {still_on_job
+                                {still_in_study
                                   ? 'Till Present'
-                                  : dateFormat(job_end_date, 'mmmm, yyyy')}
+                                  : dateFormat(date_ended, 'mmmm, yyyy')}
                               </p>
                             </div>
                           )}
-                          <div className='detail d-flex__col gap_1r padding_1r'>
-                            <p className='light-text'>Job Description</p>
-                            <p className='padding-left_1r'>{job_description}</p>
-                          </div>
                         </div>
                       )}
                     </div>
@@ -216,17 +213,12 @@ function ExperienceDetails({
               <div className='d-flex__col gap_1r'>
                 <h3>Do</h3>
                 <ul className='help-list d-flex__col gap_1r padding-left_1r'>
-                  <li>Tailor your work experience section to each job</li>
-                  <li>Job description should be 2 or 3 lines</li>
+                  <li>Start with your highest education attainment</li>
+                  <li>List your education in reverse-chronological order</li>
                   <li>
-                    Your resume / cv should be 1 page or 2 pages if you have
-                    more experience
+                    Graduation date is optional if you earned it more than five
+                    years ago
                   </li>
-                  <li>
-                    Job description is optional for older or irrelevant work
-                    experience to applied job
-                  </li>
-                  <li>Do check grammar, punctuation and spelling</li>
                 </ul>
               </div>
 
@@ -234,8 +226,9 @@ function ExperienceDetails({
                 <h3>Don&apos;t</h3>
                 <ul className='help-list d-flex__col gap_1r padding-left_1r'>
                   <li>
-                    Don&apos;t put too much into your work experience section
+                    Don&apos;t include your GPA / exam mark if it is very low
                   </li>
+                  <li>Don&apos;t embellish or falsify things</li>
                 </ul>
               </div>
             </div>
@@ -246,4 +239,4 @@ function ExperienceDetails({
   );
 }
 
-export default ExperienceDetails;
+export default EducationDetails;
