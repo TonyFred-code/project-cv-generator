@@ -1,0 +1,23 @@
+.loader-container {
+  background-color: blue;
+  color: white;
+}
+
+.loader {
+  border: 0.5rem solid rgb(255, 255, 255);
+  border-left-color: transparent;
+  width: 5rem;
+  height: 5rem;
+  animation: loader 1s linear 750ms;
+  border-radius: 50%;
+}
+
+@keyframes loader {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
