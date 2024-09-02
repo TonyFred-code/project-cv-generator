@@ -14,12 +14,10 @@ function CVPreview({ profile_details, onClose }) {
   const cvPreviewRef = useRef(null);
   const { personal_details, work_experience, educational_experience } =
     profile_details;
-
   const { fullName, emailAddress, phoneNumber, homeAddress } = personal_details;
   const { work_experiences } = work_experience;
   const { educations_experiences } = educational_experience;
 
-  console.log(profile_details);
   const handlePrint = useReactToPrint({
     content: () => cvPreviewRef.current,
     documentTitle: `${fullName}_Resume`,
@@ -103,7 +101,6 @@ function CVPreview({ profile_details, onClose }) {
                       <div className='text-transform__capitalize d-flex__row gap_1r align-items__center'>
                         <span>{date_started}</span>
                         <span className='font-weight__bold'>-</span>
-
                         {still_in_study ? 'ongoing' : `${date_ended}`}
                       </div>
                     </div>
