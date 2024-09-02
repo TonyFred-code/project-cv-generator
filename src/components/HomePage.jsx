@@ -1,15 +1,12 @@
 import { useState } from 'react';
-
-import Modal from './UnderDevelopment';
 import SelectProfile from './SelectProfile';
 import Icon from '@mdi/react';
-import { mdiDownloadBox, mdiSquareEditOutline } from '@mdi/js';
+import { mdiSquareEditOutline } from '@mdi/js';
 import dateFormat from 'dateformat';
 
 import default_profiles from '../../data/profiles.json';
 
 function HomePage() {
-  const [underDevModalOpen, setUnderDevModalOpen] = useState(false);
   const [selectProfileOpen, setSelectProfileOpen] = useState(false);
   const [profiles, setProfiles] = useState(
     default_profiles.map((profile) => {
@@ -19,10 +16,6 @@ function HomePage() {
       };
     }),
   );
-
-  function toggleDialog() {
-    setUnderDevModalOpen(!underDevModalOpen);
-  }
 
   function handleProfileUpdate(updatedProfile) {
     const updatedProfiles = profiles.map((p) => {
@@ -114,25 +107,7 @@ function HomePage() {
           </span>
           <span className='icon-text'>Create</span>
         </button>
-        <button
-          type='button'
-          className='btn d-flex__row gap_1r align-items__center'
-          onClick={() => {
-            toggleDialog();
-          }}
-        >
-          <span className='icon-container'>
-            {/* <img src={DownloadsIconSrc} alt='' /> */}
-            <Icon path={mdiDownloadBox} size={2} />
-          </span>
-          <span className='icon-text'>Downloads</span>
-        </button>
       </div>
-      <Modal isOpen={underDevModalOpen} onClose={toggleDialog}>
-        <h1 className='text-transform__capitalize'>
-          Feature Under Development
-        </h1>
-      </Modal>
     </div>
   );
 }

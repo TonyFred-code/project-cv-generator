@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import '../styles/SelectProfile.css';
-import Modal from './UnderDevelopment';
 import ProfileDetails from './ProfileDetails';
 import Icon from '@mdi/react';
 import {
@@ -20,14 +19,9 @@ function SelectProfile({
   onCreateProfile,
   onDeleteProfile,
 }) {
-  const [underDevModalOpen, setUnderDevModalOpen] = useState(false);
   const [openProfileDetails, setOpenProfileDetails] = useState(false);
   const [openCVPreview, setOpenCVPreview] = useState(false);
   const [activeProfileId, setActiveProfileId] = useState(1);
-
-  function toggleDialog() {
-    setUnderDevModalOpen(!underDevModalOpen);
-  }
 
   function handlePreviewProfile(id) {
     setActiveProfileId(id);
@@ -349,11 +343,6 @@ function SelectProfile({
           })}
         </ul>
       </div>
-      <Modal isOpen={underDevModalOpen} onClose={toggleDialog}>
-        <h1 className='text-transform__capitalize'>
-          Feature Under Development
-        </h1>
-      </Modal>
     </div>
   );
 }
