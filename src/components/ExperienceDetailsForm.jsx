@@ -84,6 +84,7 @@ const ExperienceDetailsForm = forwardRef(
         <div className='form-row d-flex__col gap_1r'>
           <label htmlFor='time_started'>Job Started</label>
           <input
+            required
             type='month'
             name='time_started'
             id='time_started'
@@ -108,6 +109,7 @@ const ExperienceDetailsForm = forwardRef(
                 <input
                   type='checkbox'
                   name='on_job'
+                  required
                   id='on_job'
                   checked={stillOnJob}
                   onChange={(e) => {
@@ -121,6 +123,7 @@ const ExperienceDetailsForm = forwardRef(
           {!stillOnJob && (
             <input
               type='month'
+              required
               name='time_ended'
               id='time_ended'
               max={dateFormat(new Date().now, 'yyyy-mm')}

@@ -7,6 +7,7 @@
 }
 
 #root > * {
+  width: 100%;
   min-height: 100vh;
 }
 
@@ -34,6 +35,11 @@ header {
 
 h1 {
   font-size: 2.2rem;
+  line-height: 1.1;
+}
+
+h2 {
+  font-size: 2rem;
   line-height: 1.1;
 }
 
@@ -79,12 +85,6 @@ button:hover {
 button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
-}
-
-#root {
-  width: 100%;
-  max-width: 1280px;
-  margin: 0 auto;
 }
 
 .icon-container {
@@ -203,6 +203,10 @@ ul.help-list {
 
 .text-transform__uppercase {
   text-transform: uppercase;
+}
+
+.font-weight__bold {
+  font-weight: bold;
 }
 
 .cursor__pointer {

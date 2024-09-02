@@ -5,6 +5,7 @@ import ExperienceDetails from './ExperienceDetails';
 import Icon from '@mdi/react';
 import { mdiArrowLeftThin, mdiEye } from '@mdi/js';
 import EducationDetails from './EducationDetails';
+import CVPreview from './CVPreview';
 
 function ProfileDetails({
   profileDetails,
@@ -20,6 +21,7 @@ function ProfileDetails({
   const [personalDetailsOpen, setPersonalDetailsOpen] = useState(false);
   const [experienceDetailsOpen, setExperienceDetailsOpen] = useState(false);
   const [educationDetailsOpen, setEducationDetailsOpen] = useState(false);
+  const [profilePreview, setProfilePreview] = useState(false);
 
   const { personal_details, work_experience, educational_experience } =
     profileDetails;
@@ -96,6 +98,17 @@ function ProfileDetails({
     );
   }
 
+  if (profilePreview) {
+    return (
+      <CVPreview
+        onClose={() => {
+          setProfilePreview(false);
+        }}
+        profile_details={profileDetails}
+      />
+    );
+  }
+
   return (
     <div className='profile-details-container'>
       <header className='d-flex__row gap_2r padding_2r align-items__center justify-content__space-around'>
@@ -112,7 +125,12 @@ function ProfileDetails({
           <span className='icon-text'>Back</span>
         </button>
         <h1 className='profile-page-title'>Profile</h1>
-        <button className='btn btn-icon d-flex__row align-items__center gap_1r'>
+        <button
+          className='btn btn-icon d-flex__row align-items__center gap_1r'
+          onClick={() => {
+            setProfilePreview(true);
+          }}
+        >
           <span className='icon-container'>
             <Icon path={mdiEye} size={2} />
           </span>

@@ -11,6 +11,7 @@ import {
   mdiTrashCan,
 } from '@mdi/js';
 import dateFormat from 'dateformat';
+import CVPreview from './CVPreview';
 
 function SelectProfile({
   onClose,
@@ -21,10 +22,16 @@ function SelectProfile({
 }) {
   const [underDevModalOpen, setUnderDevModalOpen] = useState(false);
   const [openProfileDetails, setOpenProfileDetails] = useState(false);
+  const [openCVPreview, setOpenCVPreview] = useState(false);
   const [activeProfileId, setActiveProfileId] = useState(1);
 
   function toggleDialog() {
     setUnderDevModalOpen(!underDevModalOpen);
+  }
+
+  function handlePreviewProfile(id) {
+    setActiveProfileId(id);
+    setOpenCVPreview(true);
   }
 
   function handleEditProfile(id) {
@@ -228,6 +235,17 @@ function SelectProfile({
     );
   }
 
+  function handleOpenProfilePreview(profile) {
+    return (
+      <CVPreview
+        profile_details={profile}
+        onClose={() => {
+          setOpenCVPreview(false);
+        }}
+      />
+    );
+  }
+
   if (openProfileDetails) {
     const [activeProfile] = defaultProfiles.filter(
       (profile) => profile.id === activeProfileId,
@@ -236,15 +254,21 @@ function SelectProfile({
     return handleOpenProfileDetails(activeProfile);
   }
 
+  if (openCVPreview) {
+    const [activeProfile] = defaultProfiles.filter(
+      (profile) => profile.id === activeProfileId,
+    );
+
+    return handleOpenProfilePreview(activeProfile);
+  }
+
   return (
     <div className='d-flex__col gap_2r padding_2r'>
       <header className='d-flex__row justify-content__space-around align-items__center'>
         <button
           type='button'
           className='btn d-flex__row align-items__center gap_1r btn-icon'
-          onClick={() => {
-            onClose();
-          }}
+          onClick={onClose}
         >
           <span className='icon-container'>
             <Icon path={mdiArrowLeftThin} size={3} />
@@ -309,6 +333,9 @@ function SelectProfile({
                     <button
                       type='button'
                       className='btn d-flex__row align-items__center gap_1r btn-icon'
+                      onClick={() => {
+                        handlePreviewProfile(profile.id);
+                      }}
                     >
                       <span className='icon-container'>
                         <Icon path={mdiEye} size={2} />
