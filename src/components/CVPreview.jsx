@@ -1,9 +1,17 @@
 import '../styles/CVPreview.css';
-
 import Icon from '@mdi/react';
-import { mdiArrowLeftThin, mdiHome, mdiEmail, mdiPhone } from '@mdi/js';
+import {
+  mdiArrowLeftThin,
+  mdiHome,
+  mdiEmail,
+  mdiPhone,
+  mdiDownload,
+} from '@mdi/js';
+import { useRef } from 'react';
+import { useReactToPrint } from 'react-to-print';
 
 function CVPreview({ profile_details, onClose }) {
+  const cvPreviewRef = useRef(null);
   const { personal_details, work_experience, educational_experience } =
     profile_details;
 
@@ -12,6 +20,10 @@ function CVPreview({ profile_details, onClose }) {
   const { educations_experiences } = educational_experience;
 
   console.log(profile_details);
+  const handlePrint = useReactToPrint({
+    content: () => cvPreviewRef.current,
+    documentTitle: `${fullName}_Resume`,
+  });
 
   return (
     <div className='d-flex__col gap_2r '>
@@ -31,8 +43,18 @@ function CVPreview({ profile_details, onClose }) {
         <h1 className='text-transform__uppercase margin_lr_centering'>
           your CV
         </h1>
+        <button type='button' className='btn btn-icon' onClick={handlePrint}>
+          <span className='icon-container'>
+            <Icon path={mdiDownload} size={1} />
+          </span>
+          <span className='icon-text'>Download</span>
+        </button>
       </header>
-      <div className='d-flex__col gap_1r padding_1r preview-container'>
+      <div
+        className='d-flex__col gap_1r padding_1r preview-container'
+        id='preview-container'
+        ref={cvPreviewRef}
+      >
         <div className='personal-details text-align__center d-flex__col gap_1r'>
           <h1 className='text-transform__capitalize text-align__center'>
             {fullName}
