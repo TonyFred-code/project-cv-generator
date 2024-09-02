@@ -38,6 +38,11 @@ h1 {
   line-height: 1.1;
 }
 
+h2 {
+  font-size: 2rem;
+  line-height: 1.1;
+}
+
 ul {
   list-style-type: none;
 }
@@ -198,6 +203,10 @@ ul.help-list {
 
 .text-transform__uppercase {
   text-transform: uppercase;
+}
+
+.font-weight__bold {
+  font-weight: bold;
 }
 
 .cursor__pointer {
