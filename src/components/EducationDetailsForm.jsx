@@ -81,6 +81,7 @@ const EducationDetailsForm = forwardRef(
         <div className='form-row d-flex__col gap_1r'>
           <label htmlFor='date_started'>Started Study</label>
           <input
+            required
             type='month'
             name='date_started'
             id='date_started'
@@ -103,6 +104,7 @@ const EducationDetailsForm = forwardRef(
                 className='d-flex__row align-items__center gap_1r'
               >
                 <input
+                  required
                   type='checkbox'
                   name='in_study'
                   id='in_study'
@@ -117,6 +119,7 @@ const EducationDetailsForm = forwardRef(
           </div>
           {!stillLearning && (
             <input
+              required
               type='month'
               name='date_ended'
               id='date_ended'
