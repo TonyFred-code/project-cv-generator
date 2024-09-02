@@ -69,8 +69,6 @@ function ProfileDetails({
   }
 
   if (experienceDetailsOpen) {
-    console.log(work_experience);
-
     return (
       <ExperienceDetails
         experience_details={work_experience.work_experiences}

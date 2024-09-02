@@ -34,8 +34,6 @@ function ExperienceDetails({
     onExperienceDelete(experienceId);
   }
 
-  console.log(experience_details);
-
   return (
     <div className='personal-details padding_2r'>
       <header className='d-flex__row align-items__center'>

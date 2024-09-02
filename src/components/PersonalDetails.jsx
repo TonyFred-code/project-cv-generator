@@ -21,9 +21,6 @@ function PersonalDetails({
       ...personal_details,
       ...newPersonalDetails,
     };
-
-    console.log(updatedPersonalDetails);
-
     onUpdatePersonalDetails(updatedPersonalDetails);
   }
 
